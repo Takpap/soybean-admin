@@ -13,7 +13,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     meta: {
       title: '403',
       i18nKey: 'route.403',
-      constant: true
+      constant: true,
+      hideInMenu: true
     }
   },
   {
@@ -23,7 +24,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     meta: {
       title: '404',
       i18nKey: 'route.404',
-      constant: true
+      constant: true,
+      hideInMenu: true
     }
   },
   {
@@ -33,7 +35,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     meta: {
       title: '500',
       i18nKey: 'route.500',
-      constant: true
+      constant: true,
+      hideInMenu: true
     }
   },
   {
@@ -44,7 +47,8 @@ export const generatedRoutes: GeneratedRoute[] = [
       title: 'about',
       i18nKey: 'route.about',
       icon: 'fluent:book-information-24-regular',
-      order: 10
+      order: 10,
+      hideInMenu: true
     }
   },
   {
@@ -55,7 +59,8 @@ export const generatedRoutes: GeneratedRoute[] = [
       title: 'function',
       i18nKey: 'route.function',
       icon: 'icon-park-outline:all-application',
-      order: 6
+      order: 6,
+      hideInMenu: true
     },
     children: [
       {
@@ -127,7 +132,8 @@ export const generatedRoutes: GeneratedRoute[] = [
           icon: 'material-symbols:route',
           order: 3,
           roles: ['R_ADMIN'],
-          keepAlive: true
+          keepAlive: true,
+          hideInMenu: true,
         }
       },
       {
@@ -176,7 +182,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     meta: {
       title: 'multi-menu',
       i18nKey: 'route.multi-menu',
-      order: 8
+      order: 8,
+      hideInMenu: true
     },
     children: [
       {

@@ -4,7 +4,8 @@
  * @param env The current env
  */
 export function createServiceConfig(env: Env.ImportMeta) {
-  const mockURL = 'https://mock.apifox.com/m1/3109515-0-default';
+  // const mockURL = 'https://mock.apifox.com/m1/3109515-0-default';
+  const mockURL = 'https://mock.apifox.com/m1/4045953-0-default';
 
   const serviceConfigMap: App.Service.ServiceConfigMap = {
     dev: {
