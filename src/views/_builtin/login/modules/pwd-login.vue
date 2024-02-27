@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue';
 import { $t } from '@/locales';
-import { loginModuleRecord } from '@/constants/app';
-import { useRouterPush } from '@/hooks/common/router';
+// import { loginModuleRecord } from '@/constants/app';
+// import { useRouterPush } from '@/hooks/common/router';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { useAuthStore } from '@/store/modules/auth';
 
@@ -11,16 +11,16 @@ defineOptions({
 });
 
 const authStore = useAuthStore();
-const { toggleLoginModule } = useRouterPush();
+// const { toggleLoginModule } = useRouterPush();
 const { formRef, validate } = useNaiveForm();
 
 interface FormModel {
-  userName: string;
+  username: string;
   password: string;
 }
 
 const model: FormModel = reactive({
-  userName: 'playlet',
+  username: 'playlet',
   password: '123456'
 });
 
@@ -28,21 +28,21 @@ const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
   const { formRules } = useFormRules(); // inside computed to make locale reactive
 
   return {
-    userName: formRules.userName,
+    username: formRules.username,
     password: formRules.pwd
   };
 });
 
 async function handleSubmit() {
   await validate();
-  await authStore.login(model.userName, model.password);
+  await authStore.login(model.username, model.password);
 }
 </script>
 
 <template>
   <NForm ref="formRef" :model="model" :rules="rules" size="large" :show-label="false">
-    <NFormItem path="userName">
-      <NInput v-model:value="model.userName" :placeholder="$t('page.login.common.userNamePlaceholder')" />
+    <NFormItem path="username">
+      <NInput v-model:value="model.username" :placeholder="$t('page.login.common.userNamePlaceholder')" />
     </NFormItem>
     <NFormItem path="password">
       <NInput
@@ -59,14 +59,16 @@ async function handleSubmit() {
       <NButton type="primary" size="large" block round :loading="authStore.loginLoading" @click="handleSubmit">
         {{ $t('common.confirm') }}
       </NButton>
-      <div class="flex-y-center justify-between gap-12px">
+      <!--
+ <div class="flex-y-center justify-between gap-12px">
         <NButton class="flex-1" block @click="toggleLoginModule('code-login')">
           {{ $t(loginModuleRecord['code-login']) }}
         </NButton>
         <NButton class="flex-1" block @click="toggleLoginModule('register')">
           {{ $t(loginModuleRecord.register) }}
         </NButton>
-      </div>
+      </div> 
+-->
     </NSpace>
   </NForm>
 </template>

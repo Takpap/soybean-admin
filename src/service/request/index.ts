@@ -8,10 +8,7 @@ const isHttpProxy = import.meta.env.VITE_HTTP_PROXY === 'Y';
 
 export const request = createFlatRequest<App.Service.Response>(
   {
-    baseURL: isHttpProxy ? createProxyPattern() : baseURL,
-    headers: {
-      apifoxToken: 'XL299LiMEDZ0H5h3A29PxwQXdMJqWyY2'
-    }
+    baseURL: isHttpProxy ? createProxyPattern() : baseURL
   },
   {
     async onRequest(config) {
@@ -30,6 +27,7 @@ export const request = createFlatRequest<App.Service.Response>(
       return response.data.code === '0000';
     },
     async onBackendFail(_response) {
+      console.log('_response:', _response);
       // when the backend response code is not "0000", it means the request is fail
       // for example: the token is expired, refetch token and retry request
     },
@@ -44,6 +42,10 @@ export const request = createFlatRequest<App.Service.Response>(
       // show backend error message
       if (error.code === BACKEND_ERROR_CODE) {
         message = error.response?.data?.msg || message;
+      }
+
+      if (message.includes('code 401')) {
+        message = '账户或密码错误';
       }
 
       window.$message?.error(message);

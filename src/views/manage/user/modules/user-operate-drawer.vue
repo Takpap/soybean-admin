@@ -49,27 +49,27 @@ const title = computed(() => {
 
 type Model = Pick<
   Api.SystemManage.User,
-  'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'userRoles' | 'status'
+  'username' | 'userGender' | 'shortName' | 'phone' | 'email' | 'roles' | 'status'
 >;
 
 const model: Model = reactive(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
-    userName: '',
+    username: '',
     userGender: null,
-    nickName: '',
-    userPhone: '',
-    userEmail: '',
-    userRoles: [],
+    shortName: '',
+    phone: '',
+    email: '',
+    roles: [],
     status: null
   };
 }
 
-type RuleKey = Extract<keyof Model, 'userName' | 'status'>;
+type RuleKey = Extract<keyof Model, 'username' | 'status'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
-  userName: defaultRequiredRule,
+  username: defaultRequiredRule,
   status: defaultRequiredRule
 };
 
@@ -87,7 +87,7 @@ async function getRoleOptions() {
 
     // the mock data does not have the roleCode, so fill it
     // if the real request, remove the following code
-    const userRoleOptions = model.userRoles.map(item => ({
+    const userRoleOptions = model.roles.map(item => ({
       label: item,
       value: item
     }));
@@ -133,34 +133,34 @@ watch(visible, () => {
   <NDrawer v-model:show="visible" :title="title" display-directive="show" :width="360">
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
       <NForm ref="formRef" :model="model" :rules="rules">
-        <NFormItem :label="$t('page.manage.user.userName')" path="userName">
-          <NInput v-model:value="model.userName" :placeholder="$t('page.manage.user.form.userName')" />
+        <NFormItem :label="$t('page.manage.user.username')" path="username">
+          <NInput v-model:value="model.username" :placeholder="$t('page.manage.user.form.username')" />
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.userGender')" path="userGender">
           <NRadioGroup v-model:value="model.userGender">
             <NRadio v-for="item in userGenderOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
           </NRadioGroup>
         </NFormItem>
-        <NFormItem :label="$t('page.manage.user.nickName')" path="nickName">
-          <NInput v-model:value="model.nickName" :placeholder="$t('page.manage.user.form.nickName')" />
+        <NFormItem :label="$t('page.manage.user.shortName')" path="shortName">
+          <NInput v-model:value="model.shortName" :placeholder="$t('page.manage.user.form.shortName')" />
         </NFormItem>
-        <NFormItem :label="$t('page.manage.user.userPhone')" path="userPhone">
-          <NInput v-model:value="model.userPhone" :placeholder="$t('page.manage.user.form.userPhone')" />
+        <NFormItem :label="$t('page.manage.user.phone')" path="phone">
+          <NInput v-model:value="model.phone" :placeholder="$t('page.manage.user.form.phone')" />
         </NFormItem>
-        <NFormItem :label="$t('page.manage.user.userEmail')" path="email">
-          <NInput v-model:value="model.userEmail" :placeholder="$t('page.manage.user.form.userEmail')" />
+        <NFormItem :label="$t('page.manage.user.email')" path="email">
+          <NInput v-model:value="model.email" :placeholder="$t('page.manage.user.form.email')" />
         </NFormItem>
-        <NFormItem :label="$t('page.manage.user.userStatus')" path="status">
+        <NFormItem :label="$t('page.manage.user.status')" path="status">
           <NRadioGroup v-model:value="model.status">
             <NRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
           </NRadioGroup>
         </NFormItem>
-        <NFormItem :label="$t('page.manage.user.userRole')" path="roles">
+        <NFormItem :label="$t('page.manage.user.roles')" path="roles">
           <NSelect
-            v-model:value="model.userRoles"
+            v-model:value="model.roles"
             multiple
             :options="roleOptions"
-            :placeholder="$t('page.manage.user.form.userRole')"
+            :placeholder="$t('page.manage.user.form.roles')"
           />
         </NFormItem>
       </NForm>

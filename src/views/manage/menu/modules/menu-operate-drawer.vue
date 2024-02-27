@@ -70,11 +70,11 @@ function createDefaultModel(): Model {
   };
 }
 
-type RuleKey = Extract<keyof Model, 'userName' | 'userStatus'>;
+// type RuleKey = Extract<keyof Model, 'username' | 'status'>;
 
-const rules: Record<RuleKey, App.Global.FormRule> = {
-  userName: defaultRequiredRule,
-  userStatus: defaultRequiredRule
+const rules: Record<any, App.Global.FormRule> = {
+  username: defaultRequiredRule,
+  status: defaultRequiredRule
 };
 
 const localIcons = getLocalIcons();

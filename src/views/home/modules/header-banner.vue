@@ -48,7 +48,7 @@ const statisticData = computed<StatisticData[]>(() => [
           </div>
           <div class="pl-12px">
             <h3 class="text-18px font-semibold">
-              {{ $t('page.home.greeting', { userName: authStore.userInfo.userName }) }}
+              {{ $t('page.home.greeting', { username: authStore.userInfo.username }) }}
             </h3>
             <p class="leading-30px text-#999">{{ $t('page.home.weatherDesc') }}</p>
           </div>

@@ -39,14 +39,14 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   /**
    * Login
    *
-   * @param userName User name
+   * @param username User name
    * @param password Password
    */
-  async function login(userName: string, password: string) {
+  async function login(username: string, password: string) {
     startLoading();
 
-    const { data: loginToken, error } = await fetchLogin(userName, password);
-
+    const { data: loginToken, error } = await fetchLogin(username, password);
+    console.log('loginToken:', loginToken);
     if (!error) {
       const pass = await loginByToken(loginToken);
 
@@ -58,7 +58,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
         if (routeStore.isInitAuthRoute) {
           window.$notification?.success({
             title: $t('page.login.common.loginSuccess'),
-            content: $t('page.login.common.welcomeBack', { userName: userInfo.userName }),
+            content: $t('page.login.common.welcomeBack', { username: userInfo.username }),
             duration: 4500
           });
         }

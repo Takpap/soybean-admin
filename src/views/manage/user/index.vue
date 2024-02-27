@@ -6,7 +6,7 @@ import { fetchGetUserList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
 import { $t } from '@/locales';
-import { enableStatusRecord, userGenderRecord } from '@/constants/business';
+import { enableStatusRecord } from '@/constants/business';
 import UserOperateDrawer, { type OperateType } from './modules/user-operate-drawer.vue';
 import UserSearch from './modules/user-search.vue';
 
@@ -25,11 +25,11 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
     // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
     // the value can not be undefined, otherwise the property in Form will not be reactive
     status: null,
-    userName: null,
+    username: null,
     userGender: null,
-    nickName: null,
-    userPhone: null,
-    userEmail: null
+    shortName: null,
+    phone: null,
+    email: null
   },
   transformer: res => {
     const { records = [], current = 1, size = 10, total = 0 } = res.data || {};
@@ -55,52 +55,52 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       width: 64
     },
     {
-      key: 'userName',
-      title: $t('page.manage.user.userName'),
+      key: 'username',
+      title: $t('page.manage.user.username'),
+      align: 'center',
+      minWidth: 100
+    },
+    // {
+    //   key: 'userGender',
+    //   title: $t('page.manage.user.userGender'),
+    //   align: 'center',
+    //   width: 100,
+    //   render: row => {
+    //     if (row.userGender === null) {
+    //       return null;
+    //     }
+
+    //     const tagMap: Record<Api.SystemManage.UserGender, NaiveUI.ThemeColor> = {
+    //       1: 'primary',
+    //       2: 'error'
+    //     };
+
+    //     const label = $t(userGenderRecord[row.userGender]);
+
+    //     return <NTag type={tagMap[row.userGender]}>{label}</NTag>;
+    //   }
+    // },
+    {
+      key: 'shortName',
+      title: $t('page.manage.user.shortName'),
       align: 'center',
       minWidth: 100
     },
     {
-      key: 'userGender',
-      title: $t('page.manage.user.userGender'),
-      align: 'center',
-      width: 100,
-      render: row => {
-        if (row.userGender === null) {
-          return null;
-        }
-
-        const tagMap: Record<Api.SystemManage.UserGender, NaiveUI.ThemeColor> = {
-          1: 'primary',
-          2: 'error'
-        };
-
-        const label = $t(userGenderRecord[row.userGender]);
-
-        return <NTag type={tagMap[row.userGender]}>{label}</NTag>;
-      }
-    },
-    {
-      key: 'nickName',
-      title: $t('page.manage.user.nickName'),
-      align: 'center',
-      minWidth: 100
-    },
-    {
-      key: 'userPhone',
-      title: $t('page.manage.user.userPhone'),
+      key: 'phone',
+      title: $t('page.manage.user.phone'),
       align: 'center',
       width: 120
     },
     {
-      key: 'userEmail',
-      title: $t('page.manage.user.userEmail'),
+      key: 'email',
+      title: $t('page.manage.user.email'),
       align: 'center',
       minWidth: 200
     },
     {
       key: 'status',
-      title: $t('page.manage.user.userStatus'),
+      title: $t('page.manage.user.status'),
       align: 'center',
       width: 100,
       render: row => {

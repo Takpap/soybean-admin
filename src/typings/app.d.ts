@@ -467,21 +467,21 @@ declare namespace App {
           };
           user: {
             title: string;
-            userName: string;
+            username: string;
             userGender: string;
-            nickName: string;
-            userPhone: string;
-            userEmail: string;
-            userStatus: string;
-            userRole: string;
+            shortName: string;
+            phone: string;
+            email: string;
+            status: string;
+            roles: string;
             form: {
-              userName: string;
+              username: string;
               userGender: string;
-              nickName: string;
-              userPhone: string;
-              userEmail: string;
-              userStatus: string;
-              userRole: string;
+              shortName: string;
+              phone: string;
+              email: string;
+              status: string;
+              roles: string;
             };
             addUser: string;
             editUser: string;
@@ -554,7 +554,7 @@ declare namespace App {
       };
       form: {
         required: string;
-        userName: FormMsg;
+        username: FormMsg;
         phone: FormMsg;
         pwd: FormMsg;
         code: FormMsg;

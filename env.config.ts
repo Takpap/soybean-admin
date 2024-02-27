@@ -5,7 +5,8 @@
  */
 export function createServiceConfig(env: Env.ImportMeta) {
   // const mockURL = 'https://mock.apifox.com/m1/3109515-0-default';
-  const mockURL = 'https://mock.apifox.com/m1/4045953-0-default';
+  // const mockURL = 'https://mock.apifox.com/m1/4045953-0-default';
+  const mockURL = 'http://82.157.140.187:3003/playlet/v1';
 
   const serviceConfigMap: App.Service.ServiceConfigMap = {
     dev: {
