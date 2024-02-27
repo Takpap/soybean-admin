@@ -417,6 +417,17 @@ declare namespace App {
           };
           creativity: string;
         };
+        advertiser: {
+          title: string,
+          advertiser_id: string;
+          advertiser_name: string;
+          order_count: string;
+          pay_notify_amount: string;
+          cost: string;
+          profit: string;
+          roi: string;
+          really_roi: string;
+        };
         function: {
           tab: {
             tabOperate: {

@@ -52,6 +52,15 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'advertiser',
+    path: '/advertiser',
+    component: 'layout.base$view.advertiser',
+    meta: {
+      title: 'advertiser',
+      i18nKey: 'route.advertiser'
+    }
+  },
+  {
     name: 'function',
     path: '/function',
     component: 'layout.base',
@@ -96,7 +105,8 @@ export const generatedRoutes: GeneratedRoute[] = [
       title: 'home',
       i18nKey: 'route.home',
       icon: 'mdi:monitor-dashboard',
-      order: 1
+      order: 1,
+      hideInMenu: true
     }
   },
   {

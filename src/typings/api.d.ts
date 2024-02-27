@@ -119,6 +119,19 @@ declare namespace Api {
     type UserGender = '1' | '2';
 
     /** user */
+    type Advertiser = Common.CommonRecord<{
+      title: string,
+      advertiser_id: string;
+      advertiser_name: string;
+      order_count: number;
+      pay_notify_amount: number;
+      cost: number;
+      profit: string;
+      roi: string;
+      really_roi: string;
+    }>;
+
+    /** user */
     type User = Common.CommonRecord<{
       /** user name */
       username: string;
@@ -133,6 +146,13 @@ declare namespace Api {
       /** user role code collection */
       roles: string[];
     }>;
+
+    /** advertiser search params */
+    type AdvertiserSearchParams = CommonType.RecordNullable<
+    Api.SystemManage.Advertiser &
+      CommonSearchParams &
+      'startDate' | 'endDate' | 'date'
+  >;
 
     /** user search params */
     type UserSearchParams = CommonType.RecordNullable<

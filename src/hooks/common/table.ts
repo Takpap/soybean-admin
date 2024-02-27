@@ -3,6 +3,7 @@ import type { Ref } from 'vue';
 import type { DataTableBaseColumn, DataTableExpandColumn, DataTableSelectionColumn, PaginationProps } from 'naive-ui';
 import type { TableColumnGroup } from 'naive-ui/es/data-table/src/interface';
 import { useBoolean, useLoading } from '@sa/hooks';
+import dayjs from 'dayjs';
 import { useAppStore } from '@/store/modules/app';
 import { $t } from '@/locales';
 
@@ -103,7 +104,13 @@ export function useTable<TableData extends BaseData, Fn extends ApiFn, CustomCol
 
   async function getData() {
     startLoading();
-
+    searchParams.startDate = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
+    searchParams.endDate = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
+    if (searchParams.date?.length > 0) {
+      searchParams.startDate = searchParams.date[0];
+      searchParams.endDate = searchParams.date[1];
+      delete searchParams.date;
+    }
     const response = await apiFn(searchParams);
 
     const { data: tableData, pageNum, pageSize, total } = transformer(response as Awaited<ReturnType<Fn>>);

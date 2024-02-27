@@ -124,6 +124,7 @@ const local: App.I18n.Schema = {
     404: 'Page Not Found',
     500: 'Server Error',
     home: 'Home',
+    advertiser: 'Advertiser',
     'user-center': 'User Center',
     about: 'About',
     function: 'System Function',
@@ -255,6 +256,17 @@ const local: App.I18n.Schema = {
         routeParam: 'Route Param',
         backTab: 'Back function_tab'
       }
+    },
+    advertiser: {
+      title: 'advertiser_list',
+      advertiser_name: 'advertiser_name',
+      advertiser_id: 'advertiser_id',
+      cost: 'cost',
+      order_count: 'order_count',
+      pay_notify_amount: 'pay_amount',
+      profit: 'profit',
+      roi: 'ROI',
+      really_roi: 'Really_ROI'
     },
     manage: {
       common: {

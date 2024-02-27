@@ -22,6 +22,15 @@ export function fetchGetAllRoles() {
 }
 
 /** get user list */
+export function fetchGetAdvertiserList(params?: Api.SystemManage.AdvertiserSearchParams) {
+  return request<Api.SystemManage.UserList>({
+    url: '/advertiser',
+    method: 'get',
+    params
+  });
+}
+
+/** get user list */
 export function fetchGetUserList(params?: Api.SystemManage.UserSearchParams) {
   return request<Api.SystemManage.UserList>({
     url: '/user',

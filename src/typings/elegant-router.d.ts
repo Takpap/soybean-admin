@@ -25,6 +25,7 @@ declare module "@elegant-router/types" {
     "404": "/404";
     "500": "/500";
     "about": "/about";
+    "advertiser": "/advertiser";
     "function": "/function";
     "function_multi-tab": "/function/multi-tab";
     "function_tab": "/function/tab";
@@ -81,6 +82,7 @@ declare module "@elegant-router/types" {
     | "404"
     | "500"
     | "about"
+    | "advertiser"
     | "function"
     | "home"
     | "login"
@@ -109,6 +111,7 @@ declare module "@elegant-router/types" {
     | "500"
     | "login"
     | "about"
+    | "advertiser"
     | "function_multi-tab"
     | "function_tab"
     | "home"

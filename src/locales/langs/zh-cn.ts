@@ -129,6 +129,7 @@ const local: App.I18n.Schema = {
     function: '系统功能',
     function_tab: '标签页',
     'function_multi-tab': '多标签页',
+    advertiser: '广告主看板',
     manage: '系统管理',
     manage_user: '用户管理',
     'manage_user-detail': '用户详情',
@@ -255,6 +256,17 @@ const local: App.I18n.Schema = {
         routeParam: '路由参数',
         backTab: '返回 function_tab'
       }
+    },
+    advertiser: {
+      title: '广告主列表',
+      advertiser_name: '投手',
+      advertiser_id: '账户',
+      cost: '总消耗',
+      order_count: '订单量',
+      pay_notify_amount: '总收入',
+      profit: '总利润',
+      roi: 'ROI',
+      really_roi: '真实ROI'
     },
     manage: {
       common: {
