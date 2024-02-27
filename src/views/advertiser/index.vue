@@ -48,13 +48,13 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       key: 'order_count',
       title: $t('page.advertiser.order_count'),
       align: 'center',
-      width: 80
+      minWidth: 80
     },
     {
       key: 'cost',
       title: $t('page.advertiser.cost'),
       align: 'center',
-      width: 80
+      minWidth: 80
     },
     {
       key: 'pay_notify_amount',
@@ -66,7 +66,7 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       key: 'profit',
       title: $t('page.advertiser.profit'),
       align: 'center',
-      minWidth: 60
+      minWidth: 50
     },
     {
       key: 'roi',
