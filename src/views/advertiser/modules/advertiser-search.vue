@@ -33,7 +33,7 @@ async function search() {
   <NCard :title="$t('common.search')" :bordered="false" size="small" class="card-wrapper">
     <NForm ref="formRef" :model="model" label-placement="left">
       <NGrid responsive="screen" item-responsive>
-        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.username')" path="username" class="pr-24px">
+        <NFormItemGi span="24 s:12 m:6" :label="$t('common.date')" path="username" class="pr-24px">
           <NDatePicker
             v-model:formatted-value="model.date"
             value-format="yyyy-MM-dd"

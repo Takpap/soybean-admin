@@ -33,7 +33,7 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       key: 'advertiser_name',
       title: $t('page.advertiser.advertiser_name'),
       align: 'left',
-      minWidth: 300,
+      minWidth: 380,
       ellipsis: {
         tooltip: true
       }
@@ -51,14 +51,14 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       minWidth: 80
     },
     {
-      key: 'cost',
-      title: $t('page.advertiser.cost'),
+      key: 'pay_notify_amount',
+      title: $t('page.advertiser.pay_notify_amount'),
       align: 'center',
       minWidth: 80
     },
     {
-      key: 'pay_notify_amount',
-      title: $t('page.advertiser.pay_notify_amount'),
+      key: 'cost',
+      title: $t('page.advertiser.cost'),
       align: 'center',
       minWidth: 80
     },

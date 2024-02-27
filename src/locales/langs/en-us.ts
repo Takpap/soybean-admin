@@ -31,6 +31,7 @@ const local: App.I18n.Schema = {
     update: 'Update',
     updateSuccess: 'Update Success',
     userCenter: 'User Center',
+    date: 'Date',
     yesOrNo: {
       yes: 'Yes',
       no: 'No'

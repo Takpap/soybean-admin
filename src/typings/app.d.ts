@@ -249,6 +249,7 @@ declare namespace App {
         title: string;
       };
       common: {
+        date: string;
         action: string;
         add: string;
         addSuccess: string;
