@@ -29,10 +29,10 @@ export function createRetryOptions(config?: Partial<CreateAxiosDefaults>) {
 }
 
 export function createAxiosConfig(config?: Partial<CreateAxiosDefaults>) {
-  const TEN_SECONDS = 30 * 1000;
+  const SECONDS = 60 * 1000;
 
   const axiosConfig: CreateAxiosDefaults = {
-    timeout: TEN_SECONDS,
+    timeout: SECONDS,
     headers: {
       'Content-Type': 'application/json'
     },

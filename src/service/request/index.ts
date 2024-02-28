@@ -1,6 +1,8 @@
 import { BACKEND_ERROR_CODE, createFlatRequest, createRequest } from '@sa/axios';
 import { localStg } from '@/utils/storage';
+import { useAuthStore } from '@/store/modules/auth';
 import { createProxyPattern, createServiceConfig } from '~/env.config';
+import { REQUEST_ERROR_CODE } from '~/packages/axios/src/constant';
 
 const { baseURL, otherBaseURL } = createServiceConfig(import.meta.env);
 
@@ -35,20 +37,20 @@ export const request = createFlatRequest<App.Service.Response>(
       return response.data.data;
     },
     onError(error) {
+      const authStore = useAuthStore();
       // when the request is fail, you can show error message
-
       let message = error.message;
 
       // show backend error message
-      if (error.code === BACKEND_ERROR_CODE) {
-        message = error.response?.data?.msg || message;
-      }
-
-      if (message.includes('code 401')) {
-        message = '账户或密码错误';
+      if ([REQUEST_ERROR_CODE, BACKEND_ERROR_CODE].includes(error.code as string)) {
+        message = error.response?.data?.message || message;
       }
 
       window.$message?.error(message);
+
+      if (message.includes('重新登录')) {
+        authStore.resetStore();
+      }
     }
   }
 );
