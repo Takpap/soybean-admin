@@ -123,12 +123,17 @@ declare namespace Api {
       title: string,
       advertiser_id: string;
       advertiser_name: string;
-      order_count: number;
       pay_notify_amount: number;
       cost: number;
       profit: string;
       roi: string;
       really_roi: string;
+      order_profit: string;
+      customer_order: string;
+      order_count: string;
+      convert: string;
+      convert_cost: string;
+      grant_consumption: string;
     }>;
 
     /** user */

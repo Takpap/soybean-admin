@@ -263,11 +263,16 @@ const local: App.I18n.Schema = {
       advertiser_name: 'advertiser_name',
       advertiser_id: 'advertiser_id',
       cost: 'cost',
-      order_count: 'order_count',
       pay_notify_amount: 'pay_amount',
       profit: 'profit',
       roi: 'ROI',
-      really_roi: 'Really_ROI'
+      really_roi: 'Really_ROI',
+      order_profit: '客单利润',
+      customer_order: '客单',
+      order_count: '付费人数',
+      convert: '转化数',
+      convert_cost: '转化成本',
+      grant_consumption: '赠款消耗'
     },
     manage: {
       common: {
