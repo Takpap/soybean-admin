@@ -272,7 +272,7 @@ const local: App.I18n.Schema = {
       order_count: '付费人数',
       convert: '转化数',
       convert_cost: '转化成本',
-      grant_consumption: '赠款消耗'
+      reward_cost: '赠款消耗'
     },
     manage: {
       common: {

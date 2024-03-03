@@ -105,8 +105,8 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       minWidth: 50
     },
     {
-      key: 'grant_consumption',
-      title: $t('page.advertiser.grant_consumption'),
+      key: 'reward_cost',
+      title: $t('page.advertiser.reward_cost'),
       align: 'center',
       minWidth: 50
     }

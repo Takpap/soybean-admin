@@ -432,7 +432,7 @@ declare namespace App {
           order_count: string;
           convert: string;
           convert_cost: string;
-          grant_consumption: string;
+          reward_cost: string;
         };
         function: {
           tab: {
