@@ -18,9 +18,9 @@ import { $t } from '@/locales';
  *
  * @param record
  */
-export function transformRecordToOption<T extends Record<string, string>>(record: T) {
+export function transformRecordToOption<T extends Record<string | number, string>>(record: T, keyIsNumber?: boolean) {
   return Object.entries(record).map(([value, label]) => ({
-    value,
+    value: keyIsNumber ? Number(value) : value,
     label
   })) as CommonType.Option<keyof T>[];
 }

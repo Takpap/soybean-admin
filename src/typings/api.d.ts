@@ -26,7 +26,7 @@ declare namespace Api {
      * - "1": enabled
      * - "2": disabled
      */
-    type EnableStatus = '1' | '2';
+    type EnableStatus = 0 | 1;
 
     /** common record */
     type CommonRecord<T extends NonNullable<unknown>> = {
@@ -97,6 +97,8 @@ declare namespace Api {
       roleCode: string;
       /** role description */
       roleDesc: string;
+      prop: string;
+      label: string;
     }>;
 
     /** role search params */
@@ -108,7 +110,7 @@ declare namespace Api {
     type RoleList = Common.PaginatingQueryRecord<Role>;
 
     /** all role */
-    type AllRole = Pick<Role, 'id' | 'roleName' | 'roleCode'>;
+    type AllRole = Pick<Role, 'id' | 'roleName' | 'roleCode' | 'prop' | 'label'>;
 
     /**
      * user gender
@@ -120,7 +122,7 @@ declare namespace Api {
 
     /** user */
     type Advertiser = Common.CommonRecord<{
-      title: string,
+      title: string;
       advertiser_id: string;
       advertiser_name: string;
       pay_notify_amount: number;
@@ -138,12 +140,16 @@ declare namespace Api {
 
     /** user */
     type User = Common.CommonRecord<{
+      id: string;
       /** user name */
       username: string;
       /** user gender */
       userGender: UserGender | null;
       /** user nick name */
       shortName: string;
+      password: string;
+      /** user alias name */
+      alias: string;
       /** user phone */
       phone: string;
       /** user email */
@@ -161,7 +167,7 @@ declare namespace Api {
 
     /** user search params */
     type UserSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.User, 'username' | 'userGender' | 'shortName' | 'phone' | 'email' | 'status'> &
+      Pick<Api.SystemManage.User, 'id' | 'username' | 'userGender' | 'shortName' | 'password' | 'alias' | 'phone' | 'email' | 'status'> &
         CommonSearchParams
     >;
 

@@ -60,6 +60,9 @@ async function search() {
         <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.shortName')" path="shortName" class="pr-24px">
           <NInput v-model:value="model.shortName" :placeholder="$t('page.manage.user.form.shortName')" />
         </NFormItemGi>
+        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.alias')" path="alias" class="pr-24px">
+          <NInput v-model:value="model.alias" :placeholder="$t('page.manage.user.form.alias')" />
+        </NFormItemGi>
         <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.phone')" path="phone" class="pr-24px">
           <NInput v-model:value="model.phone" :placeholder="$t('page.manage.user.form.phone')" />
         </NFormItemGi>

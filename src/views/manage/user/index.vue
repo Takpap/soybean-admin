@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
-import { fetchGetUserList } from '@/service/api';
+import { deleteUser, fetchGetUserList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -28,6 +28,7 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
     username: null,
     userGender: null,
     shortName: null,
+    alias: null,
     phone: null,
     email: null
   },
@@ -87,6 +88,12 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       minWidth: 100
     },
     {
+      key: 'alias',
+      title: $t('page.manage.user.alias'),
+      align: 'center',
+      minWidth: 100
+    },
+    {
       key: 'phone',
       title: $t('page.manage.user.phone'),
       align: 'center',
@@ -110,12 +117,12 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
 
         const tagMap: Record<Api.Common.EnableStatus, NaiveUI.ThemeColor> = {
           1: 'success',
-          2: 'warning'
+          0: 'warning'
         };
 
         const label = $t(enableStatusRecord[row.status]);
 
-        return <NTag type={tagMap[row.status]}>{label}</NTag>;
+        return <NTag type={ tagMap[row.status] }> { label } < /NTag>;
       }
     },
     {
@@ -124,21 +131,21 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       align: 'center',
       width: 130,
       render: row => (
-        <div class="flex-center gap-8px">
-          <NButton type="primary" ghost size="small" onClick={() => handleEdit(row.id)}>
-            {$t('common.edit')}
-          </NButton>
-          <NPopconfirm onPositiveClick={() => handleDelete(row.id)}>
+        <div class= "flex-center gap-8px" >
+        <NButton type="primary" ghost size="small" onClick={() => handleEdit(row.id)}>
+          { $t('common.edit') }
+          < /NButton>
+          < NPopconfirm onPositiveClick = {() => handleDelete(row.id)}>
             {{
               default: () => $t('common.confirmDelete'),
-              trigger: () => (
-                <NButton type="error" ghost size="small">
-                  {$t('common.delete')}
-                </NButton>
+    trigger: () => (
+      <NButton type= "error" ghost size = "small" >
+        { $t('common.delete') }
+        < /NButton>
               )
-            }}
-          </NPopconfirm>
-        </div>
+}}
+</NPopconfirm>
+  < /div>
       )
     }
   ]
@@ -173,8 +180,7 @@ function handleEdit(id: number) {
 }
 
 async function handleDelete(id: number) {
-  // request
-  console.log(id);
+  await deleteUser({ id });
   window.$message?.success($t('common.deleteSuccess'));
 
   getData();
@@ -192,33 +198,14 @@ function getIndex(index: number) {
     <UserSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" />
     <NCard :title="$t('page.manage.user.title')" :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
       <template #header-extra>
-        <TableHeaderOperation
-          v-model:columns="filteredColumns"
-          :disabled-delete="checkedRowKeys.length === 0"
-          :loading="loading"
-          @add="handleAdd"
-          @delete="handleBatchDelete"
-          @refresh="getData"
-        />
+        <TableHeaderOperation v-model:columns="filteredColumns" :disabled-delete="checkedRowKeys.length === 0"
+          :loading="loading" @add="handleAdd" @delete="handleBatchDelete" @refresh="getData" />
       </template>
-      <NDataTable
-        v-model:checked-row-keys="checkedRowKeys"
-        :columns="columns"
-        :data="data"
-        size="small"
-        :flex-height="!appStore.isMobile"
-        :scroll-x="640"
-        :loading="loading"
-        :pagination="pagination"
-        :row-key="item => item.id"
-        class="sm:h-full"
-      />
-      <UserOperateDrawer
-        v-model:visible="drawerVisible"
-        :operate-type="operateType"
-        :row-data="editingData"
-        @submitted="getData"
-      />
+      <NDataTable v-model:checked-row-keys="checkedRowKeys" :columns="columns" :data="data" size="small"
+        :flex-height="!appStore.isMobile" :scroll-x="640" :loading="loading" :pagination="pagination"
+        :row-key="item => item.id" class="sm:h-full" />
+      <UserOperateDrawer v-model:visible="drawerVisible" :operate-type="operateType" :row-data="editingData"
+        @submitted="getData" />
     </NCard>
   </div>
 </template>

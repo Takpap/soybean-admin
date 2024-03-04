@@ -45,7 +45,7 @@ function refresh() {
       </template>
       {{ $t('common.add') }}
     </NButton>
-    <NPopconfirm @positive-click="batchDelete">
+    <!-- <NPopconfirm @positive-click="batchDelete">
       <template #trigger>
         <NButton size="small" ghost type="error" :disabled="disabledDelete">
           <template #icon>
@@ -55,7 +55,7 @@ function refresh() {
         </NButton>
       </template>
       {{ $t('common.confirmDelete') }}
-    </NPopconfirm>
+    </NPopconfirm> -->
     <NButton size="small" @click="refresh">
       <template #icon>
         <icon-mdi-refresh class="text-icon" :class="{ 'animate-spin': loading }" />

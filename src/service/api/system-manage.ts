@@ -16,7 +16,7 @@ export function fetchGetRoleList(params?: Api.SystemManage.RoleSearchParams) {
  */
 export function fetchGetAllRoles() {
   return request<Api.SystemManage.AllRole[]>({
-    url: '/systemManage/getAllRoles',
+    url: '/user/roles',
     method: 'get'
   });
 }
@@ -44,5 +44,32 @@ export function fetchGetMenuList() {
   return request<Api.SystemManage.Menu[]>({
     url: '/systemManage/getMenuList',
     method: 'get'
+  });
+}
+
+/** get user list */
+export function updateUser(params?: Api.SystemManage.UserSearchParams) {
+  return request({
+    url: `/user/${params?.id}`,
+    method: 'patch',
+    data: params
+  });
+}
+
+/** get user list */
+export function createUser(params?: Api.SystemManage.UserSearchParams) {
+  return request({
+    url: `/user`,
+    method: 'post',
+    data: params
+  });
+}
+
+/** get user list */
+export function deleteUser(params?: Api.SystemManage.UserSearchParams) {
+  return request({
+    url: `/user/${params?.id}`,
+    method: 'delete',
+    data: params
   });
 }

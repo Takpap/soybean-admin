@@ -487,6 +487,8 @@ declare namespace App {
             username: string;
             userGender: string;
             shortName: string;
+            alias: string;
+            password: string;
             phone: string;
             email: string;
             status: string;
@@ -495,6 +497,8 @@ declare namespace App {
               username: string;
               userGender: string;
               shortName: string;
+              password: string;
+              alias: string;
               phone: string;
               email: string;
               status: string;
