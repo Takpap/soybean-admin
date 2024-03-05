@@ -57,7 +57,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base$view.advertiser',
     meta: {
       title: 'advertiser',
-      i18nKey: 'route.advertiser'
+      i18nKey: 'route.advertiser',
+      icon: 'material-symbols:receipt-long-outline-rounded'
     }
   },
   {
@@ -132,6 +133,17 @@ export const generatedRoutes: GeneratedRoute[] = [
       roles: ['admin']
     },
     children: [
+      {
+        name: 'manage_config',
+        path: '/manage/config',
+        component: 'view.manage_config',
+        meta: {
+          title: 'manage_config',
+          i18nKey: 'route.manage_config',
+          icon: 'material-symbols:precision-manufacturing',
+          roles: ['admin']
+        }
+      },
       {
         name: 'manage_menu',
         path: '/manage/menu',

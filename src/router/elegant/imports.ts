@@ -24,6 +24,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   "function_multi-tab": () => import("@/views/function/multi-tab/index.vue"),
   function_tab: () => import("@/views/function/tab/index.vue"),
   home: () => import("@/views/home/index.vue"),
+  manage_config: () => import("@/views/manage/config/index.vue"),
   manage_menu: () => import("@/views/manage/menu/index.vue"),
   manage_role: () => import("@/views/manage/role/index.vue"),
   "manage_user-detail": () => import("@/views/manage/user-detail/[id].vue"),

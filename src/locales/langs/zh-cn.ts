@@ -136,6 +136,7 @@ const local: App.I18n.Schema = {
     'manage_user-detail': '用户详情',
     manage_role: '角色管理',
     manage_menu: '菜单管理',
+    manage_config: '配置管理',
     'multi-menu': '多级菜单',
     'multi-menu_first': '菜单一',
     'multi-menu_first_child': '菜单一子菜单',
@@ -384,6 +385,12 @@ const local: App.I18n.Schema = {
           iconify: 'iconify图标',
           local: '本地图标'
         }
+      },
+      config: {
+        title: '系数配置',
+        ratioA: '系数 A',
+        ratioB: '系数 B',
+        ratioC: '系数 C',
       }
     }
   },

@@ -571,6 +571,12 @@ declare namespace App {
               local: string;
             };
           };
+          config: {
+            title: string;
+            ratioA: string;
+            ratioB: string;
+            ratioC: string;
+          }
         };
       };
       form: {
