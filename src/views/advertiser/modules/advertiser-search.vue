@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { number } from 'echarts/core';
+import dayjs from 'dayjs';
 import { $t } from '@/locales';
-import { useFormRules, useNaiveForm } from '@/hooks/common/form';
+import { useNaiveForm } from '@/hooks/common/form';
 
 defineOptions({
   name: 'AdvertiserSearch'
@@ -13,6 +14,15 @@ interface Emits {
 }
 
 const emit = defineEmits<Emits>();
+
+const disablePreviousDate = (ts: number) => ts > Date.now();
+
+const rangeShortcuts = {
+  今天: [dayjs().valueOf(), dayjs().valueOf()],
+  最近一周: [dayjs().subtract(1, 'week').valueOf(), dayjs().valueOf()],
+  最近半个月: [dayjs().subtract(0.5, 'month').valueOf(), dayjs().valueOf()],
+  最近一个月: [dayjs().subtract(1, 'month').valueOf(), dayjs().valueOf()]
+};
 
 const { formRef, validate, restoreValidation } = useNaiveForm();
 
@@ -38,6 +48,8 @@ async function search() {
             v-model:formatted-value="model.date"
             value-format="yyyy-MM-dd"
             type="daterange"
+            :is-date-disabled="disablePreviousDate"
+            :shortcuts="rangeShortcuts"
             :clearable="false"
           />
         </NFormItemGi>

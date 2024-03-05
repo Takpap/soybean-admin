@@ -141,6 +141,7 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'manage_config',
           i18nKey: 'route.manage_config',
           icon: 'material-symbols:precision-manufacturing',
+          order: 2,
           roles: ['admin']
         }
       },

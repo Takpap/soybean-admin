@@ -304,6 +304,7 @@ const local: App.I18n.Schema = {
         shortName: '昵称',
         password: '密码',
         alias: '别称',
+        remark: '备注',
         phone: '手机号',
         email: '邮箱',
         status: '用户状态',
@@ -314,6 +315,7 @@ const local: App.I18n.Schema = {
           shortName: '请输入昵称',
           password: '请输入密码',
           alias: '请输入别称',
+          remark: '请输入备注',
           phone: '请输入手机号',
           email: '请输入邮箱',
           status: '请选择用户状态',
@@ -390,7 +392,7 @@ const local: App.I18n.Schema = {
         title: '系数配置',
         ratioA: '系数 A',
         ratioB: '系数 B',
-        ratioC: '系数 C',
+        ratioC: '系数 C'
       }
     }
   },

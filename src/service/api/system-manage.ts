@@ -73,3 +73,18 @@ export function deleteUser(params?: Api.SystemManage.UserSearchParams) {
     data: params
   });
 }
+
+export function fetchRatio() {
+  return request({
+    url: '/ratio',
+    method: 'get',
+  });
+}
+
+export function updateRatio(params: any) {
+  return request({
+    url: '/ratio',
+    method: 'put',
+    params
+  });
+}

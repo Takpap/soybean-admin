@@ -13,7 +13,7 @@ const appStore = useAppStore();
 //   date: [dayjs().subtract(1, 'day').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')]
 // });
 
-const { columns, filteredColumns, data, loading, pagination, searchParams, getData, resetSearchParams } = useTable<
+const { columns, data, loading, pagination, searchParams, getData, resetSearchParams } = useTable<
   Api.SystemManage.Advertiser,
   typeof fetchGetAdvertiserList,
   'index' | 'operate'

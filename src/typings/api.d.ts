@@ -150,6 +150,7 @@ declare namespace Api {
       password: string;
       /** user alias name */
       alias: string;
+      remark: string;
       /** user phone */
       phone: string;
       /** user email */
@@ -160,14 +161,15 @@ declare namespace Api {
 
     /** advertiser search params */
     type AdvertiserSearchParams = CommonType.RecordNullable<
-    Api.SystemManage.Advertiser &
-      CommonSearchParams &
-      'startDate' | 'endDate' | 'date'
-  >;
+      (Api.SystemManage.Advertiser & CommonSearchParams & 'startDate') | 'endDate' | 'date'
+    >;
 
     /** user search params */
     type UserSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.User, 'id' | 'username' | 'userGender' | 'shortName' | 'password' | 'alias' | 'phone' | 'email' | 'status'> &
+      Pick<
+        Api.SystemManage.User,
+        'id' | 'username' | 'userGender' | 'shortName' | 'password' | 'alias' | 'phone' | 'email' | 'status'
+      > &
         CommonSearchParams
     >;
 

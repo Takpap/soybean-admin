@@ -94,6 +94,12 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       minWidth: 100
     },
     {
+      key: 'remark',
+      title: $t('page.manage.user.remark'),
+      align: 'center',
+      minWidth: 100
+    },
+    {
       key: 'phone',
       title: $t('page.manage.user.phone'),
       align: 'center',

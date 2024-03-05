@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { $t } from '@/locales';
 // import { loginModuleRecord } from '@/constants/app';
 // import { useRouterPush } from '@/hooks/common/router';
@@ -19,9 +19,13 @@ interface FormModel {
   password: string;
 }
 
+const loginInfo = JSON.parse(localStorage.getItem('loginInfo') || '{}');
+console.log('loginInfo.remember', loginInfo.remember);
+const rememberMe = ref(loginInfo.remember);
+
 const model: FormModel = reactive({
-  username: 'playlet',
-  password: '123456'
+  username: loginInfo.remember ? loginInfo.username : '',
+  password: loginInfo.remember ? loginInfo.password : ''
 });
 
 const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
@@ -35,6 +39,7 @@ const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
 
 async function handleSubmit() {
   await validate();
+  if (rememberMe.value) localStorage.setItem('loginInfo', JSON.stringify({ ...model, remember: rememberMe.value }));
   await authStore.login(model.username, model.password);
 }
 </script>
@@ -53,7 +58,7 @@ async function handleSubmit() {
     </NFormItem>
     <NSpace vertical :size="24">
       <div class="flex-y-center justify-between">
-        <NCheckbox>{{ $t('page.login.pwdLogin.rememberMe') }}</NCheckbox>
+        <NCheckbox v-model:checked="rememberMe">{{ $t('page.login.pwdLogin.rememberMe') }}</NCheckbox>
         <NButton quaternary>{{ $t('page.login.pwdLogin.forgetPassword') }}</NButton>
       </div>
       <NButton type="primary" size="large" block round :loading="authStore.loginLoading" @click="handleSubmit">

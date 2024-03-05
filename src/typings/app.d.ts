@@ -488,6 +488,7 @@ declare namespace App {
             userGender: string;
             shortName: string;
             alias: string;
+            remark: string;
             password: string;
             phone: string;
             email: string;
@@ -499,6 +500,7 @@ declare namespace App {
               shortName: string;
               password: string;
               alias: string;
+              remark: string;
               phone: string;
               email: string;
               status: string;
@@ -576,7 +578,7 @@ declare namespace App {
             ratioA: string;
             ratioB: string;
             ratioC: string;
-          }
+          };
         };
       };
       form: {

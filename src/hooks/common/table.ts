@@ -5,6 +5,7 @@ import type { TableColumnGroup } from 'naive-ui/es/data-table/src/interface';
 import { useBoolean, useLoading } from '@sa/hooks';
 import { useAppStore } from '@/store/modules/app';
 import { $t } from '@/locales';
+import dayjs from 'dayjs';
 
 type BaseData = Record<string, unknown>;
 
@@ -72,7 +73,7 @@ export function useTable<TableData extends BaseData, Fn extends ApiFn, CustomCol
 
   const { apiFn, apiParams, transformer, onPaginationChanged, immediate = true } = config;
 
-  const searchParams: NonNullable<Parameters<Fn>[0]> = reactive({ ...apiParams });
+  const searchParams: NonNullable<Parameters<Fn>[0]> = reactive({ ...apiParams, date: [dayjs().format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')] });
 
   const { columns, filteredColumns, reloadColumns } = useTableColumn(config.columns);
 

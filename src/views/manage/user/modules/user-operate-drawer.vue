@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue';
+import { omit } from 'lodash';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { createUser, fetchGetAllRoles, updateUser } from '@/service/api';
 import { $t } from '@/locales';
 import { enableStatusOptions } from '@/constants/business';
-import { omit } from 'lodash';
 
 defineOptions({
   name: 'UserOperateDrawer'
@@ -50,7 +50,7 @@ const title = computed(() => {
 
 type Model = Pick<
   Api.SystemManage.User,
-  'username' | 'userGender' | 'shortName' | 'alias' | 'phone' | 'email' | 'roles' | 'status' | 'password'
+  'username' | 'userGender' | 'shortName' | 'alias' | 'phone' | 'email' | 'roles' | 'status' | 'password' | 'remark'
 >;
 
 const model: Model = reactive(createDefaultModel());
@@ -61,6 +61,7 @@ function createDefaultModel(): Model {
     userGender: null,
     shortName: '',
     alias: '',
+    remark: '',
     phone: '',
     email: '',
     password: '',
@@ -111,14 +112,18 @@ async function handleSubmit() {
   await validate();
   // request
   const data = omit(model, ['userGender', 'updateAt', 'createAt']);
-  if (props.operateType === 'edit') {
-    await updateUser(omit(data, 'password'));
-  } else {
-    await createUser(data);
+  try {
+    if (props.operateType === 'edit') {
+      await updateUser(omit(data, 'password'));
+    } else {
+      await createUser(data);
+    }
+    window.$message?.success($t('common.updateSuccess'));
+    closeDrawer();
+    emit('submitted');
+  } catch (error) {
+    console.log('error', error);
   }
-  window.$message?.success($t('common.updateSuccess'));
-  closeDrawer();
-  emit('submitted');
 }
 
 watch(visible, () => {
@@ -145,6 +150,9 @@ watch(visible, () => {
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.alias')" path="alias">
           <NInput v-model:value="model.alias" :placeholder="$t('page.manage.user.form.alias')" />
+        </NFormItem>
+        <NFormItem :label="$t('page.manage.user.remark')" path="remark">
+          <NInput v-model:value="model.remark" :placeholder="$t('page.manage.user.form.remark')" type="textarea" />
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.phone')" path="phone">
           <NInput v-model:value="model.phone" :placeholder="$t('page.manage.user.form.phone')" />

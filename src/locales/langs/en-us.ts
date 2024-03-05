@@ -133,6 +133,7 @@ const local: App.I18n.Schema = {
     'function_multi-tab': 'Multi Tab',
     manage: 'System Manage',
     manage_user: 'User Manage',
+    manage_config: 'Config Manage',
     'manage_user-detail': 'User Detail',
     manage_role: 'Role Manage',
     manage_menu: 'Menu Manage',
@@ -281,6 +282,12 @@ const local: App.I18n.Schema = {
           disable: 'Disable'
         }
       },
+      config: {
+        title: 'ratio',
+        ratioA: 'ratioA',
+        ratioB: 'ratioB',
+        ratioC: 'ratioC'
+      },
       role: {
         title: 'Role List',
         roleName: 'Role Name',
@@ -302,6 +309,7 @@ const local: App.I18n.Schema = {
         userGender: 'Gender',
         shortName: 'Nick Name',
         alias: 'Alias Name',
+        remark: 'Remark',
         password: 'Password',
         phone: 'Phone Number',
         email: 'Email',
@@ -311,7 +319,9 @@ const local: App.I18n.Schema = {
           username: 'Please enter user name',
           userGender: 'Please select gender',
           shortName: 'Please enter nick name',
+          remark: 'Please enter Remark',
           alias: 'Please enter alias name',
+          password: 'Please enter password',
           phone: 'Please enter phone number',
           email: 'Please enter email',
           status: 'Please select user status',
