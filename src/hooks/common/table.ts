@@ -73,7 +73,7 @@ export function useTable<TableData extends BaseData, Fn extends ApiFn, CustomCol
 
   const { apiFn, apiParams, transformer, onPaginationChanged, immediate = true } = config;
 
-  const searchParams: NonNullable<Parameters<Fn>[0]> = reactive({ ...apiParams, date: [dayjs().format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')] });
+  const searchParams: NonNullable<Parameters<Fn>[0]> = reactive({ ...apiParams, date: [dayjs().subtract(1, 'day').format('YYYY-MM-DD'), dayjs().subtract(1, 'day').format('YYYY-MM-DD')] });
 
   const { columns, filteredColumns, reloadColumns } = useTableColumn(config.columns);
 
