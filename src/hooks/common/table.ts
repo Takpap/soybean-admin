@@ -3,9 +3,9 @@ import type { Ref } from 'vue';
 import type { DataTableBaseColumn, DataTableExpandColumn, DataTableSelectionColumn, PaginationProps } from 'naive-ui';
 import type { TableColumnGroup } from 'naive-ui/es/data-table/src/interface';
 import { useBoolean, useLoading } from '@sa/hooks';
+import dayjs from 'dayjs';
 import { useAppStore } from '@/store/modules/app';
 import { $t } from '@/locales';
-import dayjs from 'dayjs';
 
 type BaseData = Record<string, unknown>;
 
@@ -73,7 +73,10 @@ export function useTable<TableData extends BaseData, Fn extends ApiFn, CustomCol
 
   const { apiFn, apiParams, transformer, onPaginationChanged, immediate = true } = config;
 
-  const searchParams: NonNullable<Parameters<Fn>[0]> = reactive({ ...apiParams, date: [dayjs().subtract(1, 'day').format('YYYY-MM-DD'), dayjs().subtract(1, 'day').format('YYYY-MM-DD')] });
+  const searchParams: NonNullable<Parameters<Fn>[0]> = reactive({
+    ...apiParams,
+    date: [dayjs().subtract(1, 'day').format('YYYY-MM-DD'), dayjs().subtract(1, 'day').format('YYYY-MM-DD')]
+  });
 
   const { columns, filteredColumns, reloadColumns } = useTableColumn(config.columns);
 
@@ -102,14 +105,14 @@ export function useTable<TableData extends BaseData, Fn extends ApiFn, CustomCol
     Object.assign(pagination, update);
   }
 
-  async function getData() {
+  async function getData(sort: any) {
     startLoading();
     if (searchParams.date?.length > 0) {
       searchParams.startDate = searchParams.date[0];
       searchParams.endDate = searchParams.date[1];
       delete searchParams.date;
     }
-    const response = await apiFn(searchParams);
+    const response = await apiFn({ ...searchParams, ...sort });
 
     const { data: tableData, pageNum, pageSize, total } = transformer(response as Awaited<ReturnType<Fn>>);
 
