@@ -110,7 +110,6 @@ export function useTable<TableData extends BaseData, Fn extends ApiFn, CustomCol
     if (searchParams.date?.length > 0) {
       searchParams.startDate = searchParams.date[0];
       searchParams.endDate = searchParams.date[1];
-      delete searchParams.date;
     }
     const response = await apiFn({ ...searchParams, ...sort });
 
