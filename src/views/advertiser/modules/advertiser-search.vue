@@ -20,8 +20,9 @@ const disablePreviousDate = (ts: number) => ts > Date.now();
 const rangeShortcuts = {
   今天: [dayjs().valueOf(), dayjs().valueOf()],
   最近一周: [dayjs().subtract(1, 'week').valueOf(), dayjs().valueOf()],
-  最近半个月: [dayjs().subtract(0.5, 'month').valueOf(), dayjs().valueOf()],
-  最近一个月: [dayjs().subtract(1, 'month').valueOf(), dayjs().valueOf()]
+  最近半个月: [dayjs().subtract(15, 'day').valueOf(), dayjs().valueOf()],
+  最近一个月: [dayjs().subtract(1, 'month').valueOf(), dayjs().valueOf()],
+  最近一个季度: [dayjs().subtract(3, 'month').valueOf(), dayjs().valueOf()]
 };
 
 const { formRef, validate, restoreValidation } = useNaiveForm();
