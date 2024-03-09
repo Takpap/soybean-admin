@@ -23,7 +23,7 @@ export function createServiceConfig(env: Env.ImportMeta) {
       }
     },
     prod: {
-      baseURL: mockURL,
+      baseURL: '/playlet/v1',
       otherBaseURL: {
         demo: 'http://localhost:9530'
       }
