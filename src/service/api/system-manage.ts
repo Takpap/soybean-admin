@@ -66,11 +66,10 @@ export function createUser(params?: Api.SystemManage.UserSearchParams) {
 }
 
 /** get user list */
-export function deleteUser(params?: Api.SystemManage.UserSearchParams) {
+export function deleteUser(id: string) {
   return request({
-    url: `/user/${params?.id}`,
-    method: 'delete',
-    data: params
+    url: `/user/${id}`,
+    method: 'delete'
   });
 }
 

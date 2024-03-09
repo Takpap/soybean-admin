@@ -69,6 +69,7 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
       title: $t('page.advertiser.profit'),
       resizable: true,
       sorter: true,
+      defaultSortOrder: 'ascend',
       minWidth: 40
     },
     {
@@ -128,7 +129,6 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
 watch(summaryData, (summary: any[]) => {
   summaryCol.value = () => {
     return Object.entries(summary[0]).reduce((acc, [key, value]) => {
-      console.log('key, value', key, value);
       acc[key] = {
         value: <span>{value}</span>
       };
@@ -138,7 +138,6 @@ watch(summaryData, (summary: any[]) => {
 });
 
 const onSort = (value: any) => {
-  console.log('value', value);
   getData(omit(value, 'sorter'));
 };
 </script>

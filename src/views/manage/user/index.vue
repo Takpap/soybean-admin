@@ -61,26 +61,6 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       align: 'center',
       minWidth: 100
     },
-    // {
-    //   key: 'userGender',
-    //   title: $t('page.manage.user.userGender'),
-    //   align: 'center',
-    //   width: 100,
-    //   render: row => {
-    //     if (row.userGender === null) {
-    //       return null;
-    //     }
-
-    //     const tagMap: Record<Api.SystemManage.UserGender, NaiveUI.ThemeColor> = {
-    //       1: 'primary',
-    //       2: 'error'
-    //     };
-
-    //     const label = $t(userGenderRecord[row.userGender]);
-
-    //     return <NTag type={tagMap[row.userGender]}>{label}</NTag>;
-    //   }
-    // },
     {
       key: 'shortName',
       title: $t('page.manage.user.shortName'),
@@ -128,7 +108,7 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
 
         const label = $t(enableStatusRecord[row.status]);
 
-        return <NTag type={ tagMap[row.status] }> { label } < /NTag>;
+        return <NTag type={tagMap[row.status]}> {label} </NTag>;
       }
     },
     {
@@ -137,21 +117,21 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       align: 'center',
       width: 130,
       render: row => (
-        <div class= "flex-center gap-8px" >
-        <NButton type="primary" ghost size="small" onClick={() => handleEdit(row.id)}>
-          { $t('common.edit') }
-          < /NButton>
-          < NPopconfirm onPositiveClick = {() => handleDelete(row.id)}>
+        <div class="flex-center gap-8px" >
+          <NButton type="primary" ghost size="small" onClick={() => handleEdit(row.id)}>
+            {$t('common.edit')}
+          </NButton>
+          < NPopconfirm onPositiveClick={() => handleDelete(row.id)}>
             {{
               default: () => $t('common.confirmDelete'),
-    trigger: () => (
-      <NButton type= "error" ghost size = "small" >
-        { $t('common.delete') }
-        < /NButton>
+              trigger: () => (
+                <NButton type="error" ghost size="small" >
+                  {$t('common.delete')}
+                </NButton>
               )
-}}
-</NPopconfirm>
-  < /div>
+            }}
+          </NPopconfirm>
+        </div>
       )
     }
   ]
@@ -173,7 +153,7 @@ async function handleBatchDelete() {
 
   checkedRowKeys.value = [];
 
-  getData();
+  getData('');
 }
 
 /** the editing row data */
@@ -185,11 +165,11 @@ function handleEdit(id: number) {
   openDrawer();
 }
 
-async function handleDelete(id: number) {
-  await deleteUser({ id });
+async function handleDelete(id: string) {
+  await deleteUser(id);
   window.$message?.success($t('common.deleteSuccess'));
 
-  getData();
+  getData('');
 }
 
 function getIndex(index: number) {
