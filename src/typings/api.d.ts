@@ -161,7 +161,12 @@ declare namespace Api {
 
     /** advertiser search params */
     type AdvertiserSearchParams = CommonType.RecordNullable<
-      (Api.SystemManage.Advertiser & CommonSearchParams & 'startDate') | 'endDate' | 'date'
+      | (Api.SystemManage.Advertiser & CommonSearchParams)
+      | 'start_date'
+      | 'end_date'
+      | 'date'
+      | 'advertiser_id'
+      | 'threat_name'
     >;
 
     /** user search params */

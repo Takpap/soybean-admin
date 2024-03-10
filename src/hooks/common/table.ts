@@ -108,10 +108,15 @@ export function useTable<TableData extends BaseData, Fn extends ApiFn, CustomCol
   async function getData(sort: any) {
     startLoading();
     if (searchParams.date?.length > 0) {
-      searchParams.startDate = searchParams.date[0];
-      searchParams.endDate = searchParams.date[1];
+      searchParams.start_date = searchParams.date[0];
+      searchParams.end_date = searchParams.date[1];
     }
-    const response = await apiFn({ ...searchParams, ...sort });
+    const response = await apiFn({
+      ...searchParams,
+      ...sort,
+      advertiser_name: searchParams.advertiser_name?.toString(),
+      date: undefined
+    });
 
     const { data: tableData, pageNum, pageSize, total } = transformer(response as Awaited<ReturnType<Fn>>);
 
@@ -137,7 +142,7 @@ export function useTable<TableData extends BaseData, Fn extends ApiFn, CustomCol
   }
 
   if (immediate) {
-    getData();
+    getData('');
   }
 
   scope.run(() => {

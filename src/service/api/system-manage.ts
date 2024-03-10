@@ -31,6 +31,14 @@ export function fetchGetAdvertiserList(params?: Api.SystemManage.AdvertiserSearc
 }
 
 /** get user list */
+export function fetchAdvertiserList() {
+  return request<Api.SystemManage.UserList>({
+    url: '/user/alias-map',
+    method: 'get',
+  });
+}
+
+/** get user list */
 export function fetchGetUserList(params?: Api.SystemManage.UserSearchParams) {
   return request<Api.SystemManage.UserList>({
     url: '/user',

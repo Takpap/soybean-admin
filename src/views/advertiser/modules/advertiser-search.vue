@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { number } from 'echarts/core';
 import dayjs from 'dayjs';
+import { onMounted, reactive, ref } from 'vue';
 import { $t } from '@/locales';
 import { useNaiveForm } from '@/hooks/common/form';
+import { fetchAdvertiserList } from '@/service/api';
 
 defineOptions({
   name: 'AdvertiserSearch'
@@ -29,6 +31,13 @@ const { formRef, validate, restoreValidation } = useNaiveForm();
 
 const model = defineModel<Api.SystemManage.AdvertiserSearchParams>('model', { required: false });
 
+const aliasOptions = ref([]);
+
+onMounted(async () => {
+  const { data } = await fetchAdvertiserList();
+  aliasOptions.value = data;
+});
+
 async function reset() {
   await restoreValidation();
   emit('reset');
@@ -41,7 +50,7 @@ async function search() {
 </script>
 
 <template>
-  <NCard :title="$t('common.search')" :bordered="false" size="small" class="card-wrapper">
+  <NCard :bordered="false" size="small" class="card-wrapper pt-4">
     <NForm ref="formRef" :model="model" label-placement="left">
       <NGrid responsive="screen" item-responsive>
         <NFormItemGi span="24 s:12 m:6" :label="$t('common.date')" path="username" class="pr-24px">
@@ -53,6 +62,12 @@ async function search() {
             :shortcuts="rangeShortcuts"
             :clearable="false"
           />
+        </NFormItemGi>
+        <NFormItemGi span="24 s:12 m:6" :label="$t('page.advertiser.advertiser_name')" path="username" class="pr-24px">
+          <NSelect v-model:value="model.advertiser_name" :options="aliasOptions" multiple clearable />
+        </NFormItemGi>
+        <NFormItemGi span="24 s:12 m:6" :label="$t('page.advertiser.advertiser_id')" path="username" class="pr-24px">
+          <NInput v-model:value="model.advertiser_id" />
         </NFormItemGi>
         <NFormItemGi span="24 s:12" class="pr-24px">
           <NSpace class="w-full" justify="end">
