@@ -55,12 +55,6 @@ async function search() {
         <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.alias')" path="alias" class="pr-24px">
           <NInput v-model:value="model.alias" :placeholder="$t('page.manage.user.form.alias')" />
         </NFormItemGi>
-        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.phone')" path="phone" class="pr-24px">
-          <NInput v-model:value="model.phone" :placeholder="$t('page.manage.user.form.phone')" />
-        </NFormItemGi>
-        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.email')" path="phone" class="pr-24px">
-          <NInput v-model:value="model.email" :placeholder="$t('page.manage.user.form.email')" />
-        </NFormItemGi>
         <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.status')" path="status" class="pr-24px">
           <NSelect
             v-model:value="model.status"
