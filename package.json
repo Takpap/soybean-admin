@@ -43,7 +43,7 @@
     "release": "sa release",
     "typecheck": "vue-tsc --noEmit --skipLibCheck",
     "update-pkg": "sa update-pkg",
-		"dep": "pnpm build && rm -rf /opt/playlet-admin/dist && mv dist /opt/playlet-admin/"
+		"dep": "git pull && pnpm build && rm -rf /opt/playlet-admin/dist && mv dist /opt/playlet-admin/"
   },
   "dependencies": {
     "@better-scroll/core": "2.5.1",

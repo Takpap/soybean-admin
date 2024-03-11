@@ -55,6 +55,7 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
       title: $t('page.advertiser.cost'),
       resizable: true,
       sorter: true,
+      defaultSortOrder: 'ascend',
       minWidth: 80
     },
     {
@@ -69,7 +70,6 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
       title: $t('page.advertiser.profit'),
       resizable: true,
       sorter: true,
-      defaultSortOrder: 'ascend',
       minWidth: 40
     },
     {
