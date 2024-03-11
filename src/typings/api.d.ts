@@ -157,7 +157,9 @@ declare namespace Api {
       /** user email */
       email: string;
       /** user role code collection */
-      roles: string[];
+      roles: string;
+      members_text?: string;
+      roles_text?: string;
     }>;
 
     /** advertiser search params */
@@ -174,9 +176,9 @@ declare namespace Api {
     type UserSearchParams = CommonType.RecordNullable<
       Pick<
         Api.SystemManage.User,
-        'id' | 'username' | 'userGender' | 'shortName' | 'password' | 'alias' | 'phone' | 'email' | 'status' | 'members'
+        'id' | 'username' | 'userGender' | 'shortName' | 'password' | 'alias' | 'phone' | 'email' | 'status' | 'members' | 'members_text' | 'roles_text'
       > &
-        CommonSearchParams
+      CommonSearchParams
     >;
 
     /** user list */

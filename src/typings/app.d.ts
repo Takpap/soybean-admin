@@ -263,6 +263,7 @@ declare namespace App {
         deleteSuccess: string;
         confirmDelete: string;
         edit: string;
+        changePwd: string,
         index: string;
         logout: string;
         logoutConfirm: string;
@@ -495,6 +496,8 @@ declare namespace App {
             email: string;
             status: string;
             roles: string;
+            members_text?: string;
+            roles_text?: string;
             form: {
               username: string;
               userGender: string;
@@ -506,6 +509,8 @@ declare namespace App {
               phone: string;
               email: string;
               status: string;
+              members_text?: string;
+              roles_text?: string;
               roles: string;
             };
             addUser: string;

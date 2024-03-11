@@ -65,7 +65,7 @@ function createDefaultModel(): Model {
     phone: '',
     email: '',
     password: '123456',
-    roles: [],
+    roles: '',
     status: 1
   };
 }
@@ -159,32 +159,26 @@ watch(visible, () => {
         <NFormItem :label="$t('page.manage.user.remark')" path="remark">
           <NInput v-model:value="model.remark" :placeholder="$t('page.manage.user.form.remark')" type="textarea" />
         </NFormItem>
-        <NFormItem :label="$t('page.manage.user.phone')" path="phone">
+        <!--
+ <NFormItem :label="$t('page.manage.user.phone')" path="phone">
           <NInput v-model:value="model.phone" :placeholder="$t('page.manage.user.form.phone')" />
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.email')" path="email">
           <NInput v-model:value="model.email" :placeholder="$t('page.manage.user.form.email')" />
-        </NFormItem>
+        </NFormItem> 
+-->
         <NFormItem :label="$t('page.manage.user.status')" path="status">
           <NRadioGroup v-model:value="model.status">
             <NRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
           </NRadioGroup>
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.members')" path="members">
-          <NSelect
-            v-model:value="model.members"
-            multiple
-            :options="memberOptions"
-            :placeholder="$t('page.manage.user.form.members')"
-          />
+          <NSelect v-model:value="model.members" multiple :options="memberOptions"
+            :placeholder="$t('page.manage.user.form.members')" />
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.roles')" path="roles">
-          <NSelect
-            v-model:value="model.roles"
-            multiple
-            :options="roleOptions"
-            :placeholder="$t('page.manage.user.form.roles')"
-          />
+          <NSelect v-model:value="model.roles" :options="roleOptions"
+            :placeholder="$t('page.manage.user.form.roles')" />
         </NFormItem>
       </NForm>
       <template #footer>

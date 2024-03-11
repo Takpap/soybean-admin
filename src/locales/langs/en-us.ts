@@ -16,6 +16,7 @@ const local: App.I18n.Schema = {
     deleteSuccess: 'Delete Success',
     confirmDelete: 'Are you sure you want to delete?',
     edit: 'Edit',
+    changePwd: '修改密码',
     index: 'Index',
     logout: 'Logout',
     logoutConfirm: 'Are you sure you want to log out?',

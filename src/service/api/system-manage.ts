@@ -41,7 +41,7 @@ export function fetchGetAdvertiserList(params?: Api.SystemManage.AdvertiserSearc
 export function fetchAdvertiserList() {
   return request<Api.SystemManage.UserList>({
     url: '/user/alias-map',
-    method: 'get',
+    method: 'get'
   });
 }
 
@@ -88,10 +88,19 @@ export function deleteUser(id: string) {
   });
 }
 
+/** get user list */
+export function changePwd(params: any) {
+  return request({
+    url: `/user/change-pwd`,
+    method: 'patch',
+    data: params
+  });
+}
+
 export function fetchRatio() {
   return request({
     url: '/ratio',
-    method: 'get',
+    method: 'get'
   });
 }
 

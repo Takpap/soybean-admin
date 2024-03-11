@@ -1,8 +1,8 @@
 <script setup lang="tsx">
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
-import { deleteUser, fetchGetUserList } from '@/service/api';
+import { changePwd, deleteUser, fetchGetUserList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -49,13 +49,13 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       align: 'center',
       width: 48
     },
-    {
-      key: 'index',
-      title: $t('common.index'),
-      render: (_, index): string => getIndex(index),
-      align: 'center',
-      width: 64
-    },
+    // {
+    //   key: 'index',
+    //   title: $t('common.index'),
+    //   render: (_, index): string => getIndex(index),
+    //   align: 'center',
+    //   width: 64
+    // },
     {
       key: 'username',
       title: $t('page.manage.user.username'),
@@ -75,7 +75,7 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       minWidth: 100
     },
     {
-      key: 'members',
+      key: 'members_text',
       title: $t('page.manage.user.members'),
       align: 'center',
       minWidth: 100
@@ -87,16 +87,18 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       minWidth: 100
     },
     {
-      key: 'phone',
-      title: $t('page.manage.user.phone'),
+      key: 'roles',
+      title: $t('page.manage.user.roles'),
       align: 'center',
-      width: 120
-    },
-    {
-      key: 'email',
-      title: $t('page.manage.user.email'),
-      align: 'center',
-      minWidth: 200
+      minWidth: 100,
+      render: row => {
+        const roleMap = {
+          admin: 'success',
+          editor: 'warning',
+          ghost: 'info'
+        };
+        return <NTag type={roleMap[row.roles]}>{row.roles_text}</NTag>;
+      }
     },
     {
       key: 'status',
@@ -122,17 +124,20 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 130,
+      width: 230,
       render: row => (
-        <div class="flex-center gap-8px" >
+        <div class="flex-center gap-8px">
+          <NButton type="primary" ghost size="small" onClick={() => handleChangePwd(row)}>
+            {$t('common.changePwd')}
+          </NButton>
           <NButton type="primary" ghost size="small" onClick={() => handleEdit(row.id)}>
             {$t('common.edit')}
           </NButton>
-          < NPopconfirm onPositiveClick={() => handleDelete(row.id)}>
+          <NPopconfirm onPositiveClick={() => handleDelete(row.id)}>
             {{
               default: () => $t('common.confirmDelete'),
               trigger: () => (
-                <NButton type="error" ghost size="small" >
+                <NButton type="error" ghost size="small">
                   {$t('common.delete')}
                 </NButton>
               )
@@ -155,7 +160,6 @@ const checkedRowKeys = ref<string[]>([]);
 
 async function handleBatchDelete() {
   // request
-  console.log(checkedRowKeys.value);
   window.$message?.success($t('common.deleteSuccess'));
 
   checkedRowKeys.value = [];
@@ -165,6 +169,11 @@ async function handleBatchDelete() {
 
 /** the editing row data */
 const editingData = ref<Api.SystemManage.User | null>(null);
+
+const showModal = ref(false);
+let currentRow;
+const password = ref('');
+const newPassword = ref('');
 
 function handleEdit(id: number) {
   operateType.value = 'edit';
@@ -179,10 +188,20 @@ async function handleDelete(id: string) {
   getData('');
 }
 
-function getIndex(index: number) {
-  const { page = 0, pageSize = 10 } = pagination;
+async function handleChangePwd(row: object) {
+  currentRow = row;
+  showModal.value = true;
+}
 
-  return String((page - 1) * pageSize + index + 1);
+async function submitPwd() {
+  if (password.value === newPassword.value) {
+    await changePwd({ id: currentRow.id, password: newPassword.value });
+    showModal.value = false;
+    window.$message?.success('修改成功');
+    getData('');
+  } else {
+    window.$message?.error('两次密码不一致');
+  }
 }
 </script>
 
@@ -191,14 +210,45 @@ function getIndex(index: number) {
     <UserSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" />
     <NCard :title="$t('page.manage.user.title')" :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
       <template #header-extra>
-        <TableHeaderOperation v-model:columns="filteredColumns" :disabled-delete="checkedRowKeys.length === 0"
-          :loading="loading" @add="handleAdd" @delete="handleBatchDelete" @refresh="getData" />
+        <TableHeaderOperation
+          v-model:columns="filteredColumns"
+          :disabled-delete="checkedRowKeys.length === 0"
+          :loading="loading"
+          @add="handleAdd"
+          @delete="handleBatchDelete"
+          @refresh="getData"
+        />
       </template>
-      <NDataTable v-model:checked-row-keys="checkedRowKeys" :columns="columns" :data="data" size="small"
-        :flex-height="!appStore.isMobile" :scroll-x="640" :loading="loading" :pagination="pagination"
-        :row-key="item => item.id" class="sm:h-full" />
-      <UserOperateDrawer v-model:visible="drawerVisible" :operate-type="operateType" :row-data="editingData"
-        @submitted="getData" />
+      <NDataTable
+        v-model:checked-row-keys="checkedRowKeys"
+        :columns="columns"
+        :data="data"
+        size="small"
+        :flex-height="!appStore.isMobile"
+        :scroll-x="640"
+        :loading="loading"
+        :pagination="pagination"
+        :row-key="item => item.id"
+        class="sm:h-full"
+      />
+      <UserOperateDrawer
+        v-model:visible="drawerVisible"
+        :operate-type="operateType"
+        :row-data="editingData"
+        @submitted="getData"
+      />
+      <n-modal v-model:show="showModal" title="修改密码" preset="dialog">
+        <div>
+          <span>新密码</span>
+          <NInput v-model:value="password" type="password" />
+          <div class="mt-2"></div>
+          <span>确定密码</span>
+          <NInput v-model:value="newPassword" type="password" />
+        </div>
+        <template #action>
+          <NButton type="primary" @click="submitPwd">确定</NButton>
+        </template>
+      </n-modal>
     </NCard>
   </div>
 </template>
