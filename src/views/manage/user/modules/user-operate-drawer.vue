@@ -2,7 +2,7 @@
 import { computed, reactive, ref, watch } from 'vue';
 import { omit } from 'lodash';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { createUser, fetchGetAllRoles, updateUser } from '@/service/api';
+import { createUser, fetchGetAllMembers, fetchGetAllRoles, updateUser } from '@/service/api';
 import { $t } from '@/locales';
 import { enableStatusOptions } from '@/constants/business';
 
@@ -50,7 +50,7 @@ const title = computed(() => {
 
 type Model = Pick<
   Api.SystemManage.User,
-  'username' | 'userGender' | 'shortName' | 'alias' | 'phone' | 'email' | 'roles' | 'status' | 'password' | 'remark'
+  'username' | 'shortName' | 'alias' | 'phone' | 'email' | 'roles' | 'status' | 'password' | 'remark' | 'members'
 >;
 
 const model: Model = reactive(createDefaultModel());
@@ -58,15 +58,15 @@ const model: Model = reactive(createDefaultModel());
 function createDefaultModel(): Model {
   return {
     username: '',
-    userGender: null,
     shortName: '',
+    members: '',
     alias: '',
     remark: '',
     phone: '',
     email: '',
-    password: '',
+    password: '123456',
     roles: [],
-    status: null
+    status: 1
   };
 }
 
@@ -79,17 +79,21 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
 
 /** the enabled role options */
 const roleOptions = ref<CommonType.Option<string>[]>([]);
+const memberOptions = ref<CommonType.Option<string>[]>([]);
 
 async function getRoleOptions() {
   const { error, data } = await fetchGetAllRoles();
 
   if (!error) {
-    const options = data.map(item => ({
-      label: item.label,
-      value: item.prop
-    }));
+    roleOptions.value = data;
+  }
+}
 
-    roleOptions.value = options;
+async function getMembers() {
+  const { error, data } = await fetchGetAllMembers();
+
+  if (!error) {
+    memberOptions.value = data;
   }
 }
 
@@ -114,9 +118,9 @@ async function handleSubmit() {
   const data = omit(model, ['userGender', 'updateAt', 'createAt']);
   try {
     if (props.operateType === 'edit') {
-      await updateUser(omit(data, 'password'));
+      await updateUser(omit({ ...data, members: data.members?.toString() }, 'password'));
     } else {
-      await createUser(data);
+      await createUser({ ...data, members: data.members?.toString() });
     }
     window.$message?.success($t('common.updateSuccess'));
     closeDrawer();
@@ -131,6 +135,7 @@ watch(visible, () => {
     handleUpdateModelWhenEdit();
     restoreValidation();
     getRoleOptions();
+    getMembers();
   }
 });
 </script>
@@ -165,6 +170,14 @@ watch(visible, () => {
             <NRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
           </NRadioGroup>
         </NFormItem>
+        <NFormItem :label="$t('page.manage.user.members')" path="members">
+          <NSelect
+            v-model:value="model.members"
+            multiple
+            :options="memberOptions"
+            :placeholder="$t('page.manage.user.form.members')"
+          />
+        </NFormItem>
         <NFormItem :label="$t('page.manage.user.roles')" path="roles">
           <NSelect
             v-model:value="model.roles"
@@ -183,5 +196,3 @@ watch(visible, () => {
     </NDrawerContent>
   </NDrawer>
 </template>
-
-<style scoped></style>

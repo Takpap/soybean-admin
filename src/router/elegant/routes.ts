@@ -58,7 +58,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     meta: {
       title: 'advertiser',
       i18nKey: 'route.advertiser',
-      icon: 'material-symbols:receipt-long-outline-rounded'
+      icon: 'material-symbols:receipt-long-outline-rounded',
+      roles: ['admin', 'ghost', 'editor']
     }
   },
   {

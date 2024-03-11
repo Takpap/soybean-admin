@@ -63,7 +63,13 @@ async function search() {
             :clearable="false"
           />
         </NFormItemGi>
-        <NFormItemGi span="24 s:12 m:6" :label="$t('page.advertiser.advertiser_name')" path="username" class="pr-24px">
+        <NFormItemGi
+          v-if="aliasOptions.length > 0"
+          span="24 s:12 m:6"
+          :label="$t('page.advertiser.advertiser_name')"
+          path="username"
+          class="pr-24px"
+        >
           <NSelect v-model:value="model.advertiser_name" :options="aliasOptions" multiple clearable />
         </NFormItemGi>
         <NFormItemGi span="24 s:12 m:6" :label="$t('page.advertiser.advertiser_id')" path="username" class="pr-24px">

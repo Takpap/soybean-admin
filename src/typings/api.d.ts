@@ -147,6 +147,7 @@ declare namespace Api {
       userGender: UserGender | null;
       /** user nick name */
       shortName: string;
+      members: string;
       password: string;
       /** user alias name */
       alias: string;
@@ -173,7 +174,7 @@ declare namespace Api {
     type UserSearchParams = CommonType.RecordNullable<
       Pick<
         Api.SystemManage.User,
-        'id' | 'username' | 'userGender' | 'shortName' | 'password' | 'alias' | 'phone' | 'email' | 'status'
+        'id' | 'username' | 'userGender' | 'shortName' | 'password' | 'alias' | 'phone' | 'email' | 'status' | 'members'
       > &
         CommonSearchParams
     >;

@@ -28,6 +28,7 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
     username: null,
     userGender: null,
     shortName: null,
+    members: null,
     alias: null,
     phone: null,
     email: null
@@ -70,6 +71,12 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
     {
       key: 'alias',
       title: $t('page.manage.user.alias'),
+      align: 'center',
+      minWidth: 100
+    },
+    {
+      key: 'members',
+      title: $t('page.manage.user.members'),
       align: 'center',
       minWidth: 100
     },
