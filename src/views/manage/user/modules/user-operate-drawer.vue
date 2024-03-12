@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue';
-import { omit } from 'lodash';
+import { omit, omitBy } from 'lodash';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { createUser, fetchGetAllMembers, fetchGetAllRoles, updateUser } from '@/service/api';
 import { $t } from '@/locales';
@@ -104,7 +104,7 @@ function handleUpdateModelWhenEdit() {
   }
 
   if (props.operateType === 'edit' && props.rowData) {
-    Object.assign(model, omit(props.rowData, key => key.includes('text')));
+    Object.assign(model, omitBy(props.rowData, (value, key) => key.includes('text')));
   }
 }
 
