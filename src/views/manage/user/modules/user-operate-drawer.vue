@@ -104,7 +104,7 @@ function handleUpdateModelWhenEdit() {
   }
 
   if (props.operateType === 'edit' && props.rowData) {
-    Object.assign(model, props.rowData);
+    Object.assign(model, omit(props.rowData, key => key.includes('text')));
   }
 }
 
