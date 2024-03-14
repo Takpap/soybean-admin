@@ -61,6 +61,7 @@ async function search() {
             :is-date-disabled="disablePreviousDate"
             :shortcuts="rangeShortcuts"
             :clearable="false"
+            @confirm="search"
           />
         </NFormItemGi>
         <NFormItemGi
@@ -73,7 +74,7 @@ async function search() {
           <NSelect v-model:value="model.advertiser_name" :options="aliasOptions" multiple clearable />
         </NFormItemGi>
         <NFormItemGi span="24 s:12 m:6" :label="$t('page.advertiser.advertiser_id')" path="username" class="pr-24px">
-          <NInput v-model:value="model.advertiser_id" />
+          <NInput v-model:value="model.advertiser_id" clearable @keyup.enter="search" />
         </NFormItemGi>
         <NFormItemGi span="24 s:12" class="pr-24px">
           <NSpace class="w-full" justify="end">
@@ -95,5 +96,3 @@ async function search() {
     </NForm>
   </NCard>
 </template>
-
-<style scoped></style>

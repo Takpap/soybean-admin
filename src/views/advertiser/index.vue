@@ -10,8 +10,7 @@ import AdvertiserSearch from './modules/advertiser-search.vue';
 
 const appStore = useAppStore();
 
-const summaryData = ref({});
-const summaryCol = ref({});
+const summaryCol = ref(() => {});
 
 const { columns, data, loading, pagination, searchParams, getData, resetSearchParams } = useTable<
   Api.SystemManage.Advertiser,
@@ -21,11 +20,25 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
   apiFn: fetchGetAdvertiserList,
   apiParams: {
     current: 1,
-    size: 10
+    size: 10,
+    advertiser_id: '',
+    advertiser_name: '',
+    date: [dayjs().format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')]
   },
   transformer: res => {
     const { records = [], current = 1, size = 10, total = 0 } = res.data || {};
-    summaryData.value = records.splice(0, 1);
+    const summaryData = records.splice(0, 1)[0];
+
+    const createSummary = () => {
+      return Object.entries(summaryData).reduce((acc, [key, value]) => {
+        acc[key] = {
+          value: <span>{value}</span>
+        };
+        return acc;
+      }, {});
+    };
+
+    summaryCol.value = createSummary;
 
     return {
       data: records,
@@ -124,17 +137,6 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
       minWidth: 40
     }
   ]
-});
-
-watch(summaryData, (summary: any[]) => {
-  summaryCol.value = () => {
-    return Object.entries(summary[0]).reduce((acc, [key, value]) => {
-      acc[key] = {
-        value: <span>{value}</span>
-      };
-      return acc;
-    }, {});
-  };
 });
 
 const onSort = (value: any) => {

@@ -139,6 +139,7 @@ export function useTable<TableData extends BaseData, Fn extends ApiFn, CustomCol
   /** reset search params */
   function resetSearchParams() {
     Object.assign(searchParams, apiParams);
+    getData('');
   }
 
   if (immediate) {

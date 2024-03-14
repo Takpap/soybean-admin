@@ -42,6 +42,9 @@ declare namespace Api {
       updateTime: string;
       /** record status */
       status: EnableStatus | null;
+      date: string[];
+      advertiser_id: string;
+      advertiser_name: string;
     } & T;
   }
 
