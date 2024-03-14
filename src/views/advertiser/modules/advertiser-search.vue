@@ -21,6 +21,8 @@ const disablePreviousDate = (ts: number) => ts > Date.now();
 
 const rangeShortcuts = {
   今天: [dayjs().valueOf(), dayjs().valueOf()],
+  昨天: [dayjs().subtract(2, 'day').valueOf(), dayjs().subtract(1, 'day').valueOf()],
+  前天: [dayjs().subtract(3, 'day').valueOf(), dayjs().subtract(2, 'day').valueOf()],
   最近一周: [dayjs().subtract(1, 'week').valueOf(), dayjs().subtract(1, 'day').valueOf()],
   最近半个月: [dayjs().subtract(15, 'day').valueOf(), dayjs().subtract(1, 'day').valueOf()],
   最近一个月: [dayjs().subtract(1, 'month').valueOf(), dayjs().subtract(1, 'day').valueOf()],
