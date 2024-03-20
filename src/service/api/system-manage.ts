@@ -29,6 +29,15 @@ export function fetchGetAllMembers() {
 }
 
 /** get user list */
+export function fetchGetTheaterList(params?: Api.SystemManage.AdvertiserSearchParams) {
+  return request<Api.SystemManage.UserList>({
+    url: '/advertiser/theater',
+    method: 'get',
+    params
+  });
+}
+
+/** get user list */
 export function fetchGetAdvertiserList(params?: Api.SystemManage.AdvertiserSearchParams) {
   return request<Api.SystemManage.UserList>({
     url: '/advertiser',

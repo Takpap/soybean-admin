@@ -44,7 +44,7 @@ declare namespace Api {
       status: EnableStatus | null;
       date: string[];
       advertiser_id: string;
-      advertiser_name: string;
+      advertiser_name?: string;
     } & T;
   }
 
@@ -139,6 +139,8 @@ declare namespace Api {
       convert: string;
       convert_cost: string;
       reward_cost: string;
+      theater_name?: string;
+      charge_count?: string;
     }>;
 
     /** user */

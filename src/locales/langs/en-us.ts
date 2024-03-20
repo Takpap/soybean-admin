@@ -127,6 +127,7 @@ const local: App.I18n.Schema = {
     500: 'Server Error',
     home: 'Home',
     advertiser: 'Advertiser',
+    theater: 'Theater',
     'user-center': 'User Center',
     about: 'About',
     function: 'System Function',
@@ -274,7 +275,8 @@ const local: App.I18n.Schema = {
       order_count: '付费人数',
       convert: '转化数',
       convert_cost: '转化成本',
-      reward_cost: '赠款消耗'
+      reward_cost: '赠款消耗',
+      theater_name: 'Theater'
     },
     manage: {
       common: {

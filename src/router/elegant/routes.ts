@@ -264,6 +264,16 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
+    name: 'theater',
+    path: '/theater',
+    component: 'layout.base$view.theater',
+    meta: {
+      title: 'theater',
+      icon: 'mdi:theater',
+      i18nKey: 'route.theater'
+    }
+  },
+  {
     name: 'user-center',
     path: '/user-center',
     component: 'layout.base$view.user-center',

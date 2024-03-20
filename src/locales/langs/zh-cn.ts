@@ -132,6 +132,7 @@ const local: App.I18n.Schema = {
     function_tab: '标签页',
     'function_multi-tab': '多标签页',
     advertiser: '优化师看板',
+    theater: '剧集看板',
     manage: '系统管理',
     manage_user: '用户管理',
     'manage_user-detail': '用户详情',
@@ -274,7 +275,8 @@ const local: App.I18n.Schema = {
       order_count: '付费人数',
       convert: '转化数',
       convert_cost: '转化成本',
-      reward_cost: '赠款消耗'
+      reward_cost: '赠款消耗',
+      theater_name: '剧集'
     },
     manage: {
       common: {

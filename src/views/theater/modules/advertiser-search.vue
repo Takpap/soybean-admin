@@ -53,7 +53,7 @@ async function search() {
 
 <template>
   <NCard :bordered="false" size="small" class="card-wrapper">
-    <NForm ref="formRef" :model="model" :show-feedback="false" label-placement="left">
+    <NForm ref="formRef" :model="model" label-placement="left" :show-feedback="false">
       <NGrid responsive="screen" item-responsive>
         <NFormItemGi span="24 s:12 m:6" :label="$t('common.date')" path="username" class="pr-24px">
           <NDatePicker
@@ -66,7 +66,8 @@ async function search() {
             @confirm="search"
           />
         </NFormItemGi>
-        <NFormItemGi
+        <!--
+ <NFormItemGi
           v-if="aliasOptions.length > 0"
           span="24 s:12 m:6"
           :label="$t('page.advertiser.advertiser_name')"
@@ -74,11 +75,12 @@ async function search() {
           class="pr-24px"
         >
           <NSelect v-model:value="model.advertiser_name" :options="aliasOptions" multiple clearable />
-        </NFormItemGi>
+        </NFormItemGi> 
+-->
         <NFormItemGi span="24 s:12 m:6" :label="$t('page.advertiser.advertiser_id')" path="username" class="pr-24px">
           <NInput v-model:value="model.advertiser_id" clearable @keyup.enter="search" />
         </NFormItemGi>
-        <NFormItemGi span="24 s:6" class="pr-24px">
+        <NFormItemGi span="24 s:12" class="pr-24px">
           <NSpace class="w-full" justify="end">
             <NButton @click="reset">
               <template #icon>

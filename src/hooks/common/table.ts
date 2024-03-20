@@ -86,7 +86,7 @@ export function useTable<TableData extends BaseData, Fn extends ApiFn, CustomCol
     page: 1,
     pageSize: 10,
     showSizePicker: true,
-    pageSizes: [10, 15, 20, 25, 30],
+    pageSizes: [10, 15, 20, 25, 30, 50, 100],
     onChange: async (page: number) => {
       pagination.page = page;
 

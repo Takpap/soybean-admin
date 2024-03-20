@@ -263,7 +263,7 @@ declare namespace App {
         deleteSuccess: string;
         confirmDelete: string;
         edit: string;
-        changePwd: string,
+        changePwd: string;
         index: string;
         logout: string;
         logoutConfirm: string;
@@ -434,6 +434,7 @@ declare namespace App {
           convert: string;
           convert_cost: string;
           reward_cost: string;
+          theater_name?: string;
         };
         function: {
           tab: {
