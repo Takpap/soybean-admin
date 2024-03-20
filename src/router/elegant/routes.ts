@@ -270,7 +270,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     meta: {
       title: 'theater',
       icon: 'mdi:theater',
-      i18nKey: 'route.theater'
+      i18nKey: 'route.theater',
+      roles: ['admin']
     }
   },
   {
