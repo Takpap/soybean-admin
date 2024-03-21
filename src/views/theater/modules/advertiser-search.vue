@@ -77,7 +77,7 @@ async function search() {
           <NSelect v-model:value="model.advertiser_name" :options="aliasOptions" multiple clearable />
         </NFormItemGi> 
 -->
-        <NFormItemGi span="24 s:12 m:6" :label="$t('page.advertiser.advertiser_id')" path="username" class="pr-24px">
+        <NFormItemGi span="24 s:12 m:6" :label="$t('page.advertiser.theater_name')" path="username" class="pr-24px">
           <NInput v-model:value="model.advertiser_id" clearable @keyup.enter="search" />
         </NFormItemGi>
         <NFormItemGi span="24 s:12" class="pr-24px">

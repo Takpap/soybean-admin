@@ -27,7 +27,6 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
   },
   transformer: res => {
     const { records = [], current = 1, size = 10, total = 0 } = res.data || {};
-    console.log('records', records);
     const summaryData = records.splice(0, 1)[0];
 
     const createSummary = () => {
