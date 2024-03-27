@@ -32,11 +32,11 @@ async function search() {
   <NCard :title="$t('common.search')" :bordered="false" size="small" class="card-wrapper">
     <NForm ref="formRef" :model="model" label-placement="left">
       <NGrid responsive="screen" item-responsive>
-        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.advertiser_id')" path="advertiser_id" class="pr-24px">
-          <NInput v-model:value="model.advertiser_id" :placeholder="$t('page.manage.user.form.advertiser_id')" />
+        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.relation.advertiser_id')" path="advertiser_id" class="pr-24px">
+          <NInput v-model:value="model.advertiser_id" :placeholder="$t('page.manage.relation.form.advertiser_id')" />
         </NFormItemGi>
-        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.link')" path="link" class="pr-24px">
-          <NInput v-model:value="model.link" :placeholder="$t('page.manage.user.form.link')" />
+        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.relation.link')" path="link" class="pr-24px">
+          <NInput v-model:value="model.link" :placeholder="$t('page.manage.relation.form.link')" />
         </NFormItemGi>
         <NFormItemGi span="24 s:12" class="pr-24px">
           <NSpace class="w-full" justify="end">
