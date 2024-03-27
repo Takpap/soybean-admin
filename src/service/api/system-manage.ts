@@ -63,12 +63,38 @@ export function fetchGetUserList(params?: Api.SystemManage.UserSearchParams) {
   });
 }
 
-/** get user list */
+/** get Relation list */
 export function fetchGetRelationList(params?: Api.SystemManage.UserSearchParams) {
   return request<Api.SystemManage.UserList>({
     url: '/relation',
     method: 'get',
     params
+  });
+}
+
+/** get Relation list */
+export function updateRelation(params?: Api.SystemManage.RelationSearchParams) {
+  return request({
+    url: `/relation/${params?.id}`,
+    method: 'patch',
+    data: params
+  });
+}
+
+/** get Relation list */
+export function createRelation(params?: Api.SystemManage.RelationSearchParams) {
+  return request({
+    url: `/relation`,
+    method: 'post',
+    data: params
+  });
+}
+
+/** get user list */
+export function deleteRelation(id: string) {
+  return request({
+    url: `/relation/${id}`,
+    method: 'delete'
   });
 }
 

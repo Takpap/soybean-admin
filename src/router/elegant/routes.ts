@@ -166,7 +166,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.manage_relation',
         meta: {
           title: 'manage_relation',
-          i18nKey: 'route.manage_relation'
+          i18nKey: 'route.manage_relation',
+          icon: 'tabler:circles-relation'
         }
       },
       {

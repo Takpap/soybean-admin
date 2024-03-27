@@ -288,8 +288,14 @@ const local: App.I18n.Schema = {
       },
       relation: {
         title: '关联列表',
+        addRelation: '新增关联',
+        editRelation: '编辑关联',
         link: '推广链接',
         advertiser_id: '广告主ID',
+        form: {
+          link: '请输入推广链接',
+          advertiser_id: '请输入广告主ID'
+        }
       },
       role: {
         title: '角色列表',

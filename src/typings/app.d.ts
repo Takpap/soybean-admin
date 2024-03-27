@@ -470,8 +470,15 @@ declare namespace App {
             };
           };
           relation: {
+            title: string;
+            addRelation: string;
+            editRelation: string;
             advertiser_id: string;
             link: string;
+            form: {
+              advertiser_id: string;
+              link: string;
+            };
           };
           role: {
             title: string;

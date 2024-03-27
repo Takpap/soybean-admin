@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { NButton, NPopconfirm } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
-import { changePwd, deleteUser, fetchGetRelationList } from '@/service/api';
+import { changePwd, deleteRelation, fetchGetRelationList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -115,7 +115,7 @@ function handleEdit(id: number) {
 }
 
 async function handleDelete(id: string) {
-  await deleteUser(id);
+  await deleteRelation(id);
   window.$message?.success($t('common.deleteSuccess'));
 
   getData('');
