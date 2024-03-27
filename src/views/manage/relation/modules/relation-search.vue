@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { $t } from '@/locales';
-import { useFormRules, useNaiveForm } from '@/hooks/common/form';
+import { useNaiveForm } from '@/hooks/common/form';
 
 defineOptions({
   name: 'UserSearch'
@@ -16,18 +15,7 @@ const emit = defineEmits<Emits>();
 
 const { formRef, validate, restoreValidation } = useNaiveForm();
 
-const model = defineModel<Api.SystemManage.UserSearchParams>('model', { required: true });
-
-type RuleKey = Extract<keyof Api.SystemManage.UserSearchParams, 'email' | 'phone'>;
-
-const rules = computed<Record<RuleKey, App.Global.FormRule>>(() => {
-  const { patternRules } = useFormRules(); // inside computed to make locale reactive
-
-  return {
-    email: patternRules.email,
-    phone: patternRules.phone
-  };
-});
+const model = defineModel<Api.SystemManage.RelationSearchParams>('model', { required: true });
 
 async function reset() {
   await restoreValidation();
@@ -42,13 +30,13 @@ async function search() {
 
 <template>
   <NCard :title="$t('common.search')" :bordered="false" size="small" class="card-wrapper">
-    <NForm ref="formRef" :model="model" :rules="rules" label-placement="left">
+    <NForm ref="formRef" :model="model" label-placement="left">
       <NGrid responsive="screen" item-responsive>
-        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.username')" path="username" class="pr-24px">
-          <NInput v-model:value="model.username" :placeholder="$t('page.manage.user.form.username')" />
+        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.advertiser_id')" path="advertiser_id" class="pr-24px">
+          <NInput v-model:value="model.advertiser_id" :placeholder="$t('page.manage.user.form.advertiser_id')" />
         </NFormItemGi>
-        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.shortName')" path="shortName" class="pr-24px">
-          <NInput v-model:value="model.shortName" :placeholder="$t('page.manage.user.form.shortName')" />
+        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.link')" path="link" class="pr-24px">
+          <NInput v-model:value="model.link" :placeholder="$t('page.manage.user.form.link')" />
         </NFormItemGi>
         <NFormItemGi span="24 s:12" class="pr-24px">
           <NSpace class="w-full" justify="end">

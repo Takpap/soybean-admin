@@ -21,12 +21,8 @@ const { columns, filteredColumns, data, loading, pagination, getData, searchPara
   apiParams: {
     current: 1,
     size: 10,
-    // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
-    // the value can not be undefined, otherwise the property in Form will not be reactive
-    status: null,
-    username: null,
-    userGender: null,
-    shortName: null,
+    advertiser_id: '',
+    link: '',
   },
   transformer: res => {
     const { records = [], current = 1, size = 10, total = 0 } = res.data || {};
@@ -103,10 +99,7 @@ async function handleBatchDelete() {
 /** the editing row data */
 const editingData = ref<Api.SystemManage.User | null>(null);
 
-const showModal = ref(false);
 let currentRow;
-const password = ref('');
-const newPassword = ref('');
 
 function handleEdit(id: number) {
   operateType.value = 'edit';
@@ -119,22 +112,6 @@ async function handleDelete(id: string) {
   window.$message?.success($t('common.deleteSuccess'));
 
   getData('');
-}
-
-async function handleChangePwd(row: object) {
-  currentRow = row;
-  showModal.value = true;
-}
-
-async function submitPwd() {
-  if (password.value === newPassword.value) {
-    await changePwd({ id: currentRow.id, password: newPassword.value });
-    showModal.value = false;
-    window.$message?.success('修改成功');
-    getData('');
-  } else {
-    window.$message?.error('两次密码不一致');
-  }
 }
 </script>
 
