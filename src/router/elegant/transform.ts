@@ -160,6 +160,7 @@ const routeMap: RouteMap = {
   "manage": "/manage",
   "manage_config": "/manage/config",
   "manage_menu": "/manage/menu",
+  "manage_relation": "/manage/relation",
   "manage_role": "/manage/role",
   "manage_user": "/manage/user",
   "manage_user-detail": "/manage/user-detail/:id",
@@ -169,6 +170,7 @@ const routeMap: RouteMap = {
   "multi-menu_second": "/multi-menu/second",
   "multi-menu_second_child": "/multi-menu/second/child",
   "multi-menu_second_child_home": "/multi-menu/second/child/home",
+  "theater": "/theater",
   "user-center": "/user-center"
 };
 

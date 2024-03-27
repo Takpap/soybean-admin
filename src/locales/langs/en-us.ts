@@ -135,6 +135,7 @@ const local: App.I18n.Schema = {
     'function_multi-tab': 'Multi Tab',
     manage: 'System Manage',
     manage_user: 'User Manage',
+    manage_relation: 'Relation Manage',
     manage_config: 'Config Manage',
     'manage_user-detail': 'User Detail',
     manage_role: 'Role Manage',
@@ -284,6 +285,10 @@ const local: App.I18n.Schema = {
           enable: 'Enable',
           disable: 'Disable'
         }
+      },
+      relation: {
+        link: '推广链接',
+        advertiser_id: '广告主ID',
       },
       config: {
         title: 'ratio',

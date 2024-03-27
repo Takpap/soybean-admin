@@ -469,6 +469,10 @@ declare namespace App {
               disable: string;
             };
           };
+          relation: {
+            advertiser_id: string;
+            link: string;
+          };
           role: {
             title: string;
             roleName: string;

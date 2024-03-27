@@ -161,6 +161,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'manage_relation',
+        path: '/manage/relation',
+        component: 'view.manage_relation',
+        meta: {
+          title: 'manage_relation',
+          i18nKey: 'route.manage_relation'
+        }
+      },
+      {
         name: 'manage_role',
         path: '/manage/role',
         component: 'view.manage_role',

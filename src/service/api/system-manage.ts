@@ -63,6 +63,15 @@ export function fetchGetUserList(params?: Api.SystemManage.UserSearchParams) {
   });
 }
 
+/** get user list */
+export function fetchGetRelationList(params?: Api.SystemManage.UserSearchParams) {
+  return request<Api.SystemManage.UserList>({
+    url: '/relation',
+    method: 'get',
+    params
+  });
+}
+
 /** get menu list */
 export function fetchGetMenuList() {
   return request<Api.SystemManage.Menu[]>({

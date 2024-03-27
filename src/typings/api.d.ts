@@ -167,6 +167,13 @@ declare namespace Api {
       roles_text?: string;
     }>;
 
+    /** user */
+    type Relation = Common.CommonRecord<{
+      id: string;
+      advertiser_id: string;
+      link: string;
+    }>;
+
     /** advertiser search params */
     type AdvertiserSearchParams = CommonType.RecordNullable<
       | (Api.SystemManage.Advertiser & CommonSearchParams)
@@ -184,10 +191,21 @@ declare namespace Api {
         'id' | 'username' | 'userGender' | 'shortName' | 'password' | 'alias' | 'phone' | 'email' | 'status' | 'members' | 'members_text' | 'roles_text'
       > &
       CommonSearchParams
+      >;
+    
+    /** user search params */
+    type RelationSearchParams = CommonType.RecordNullable<
+    Pick<
+      Api.SystemManage.Relation,
+      'id' | 'link' | 'advertiser_id'
+    > &
+      CommonSearchParams
     >;
 
     /** user list */
     type UserList = Common.PaginatingQueryRecord<User>;
+
+    type RelationList = Common.PaginatingQueryRecord<Relation>;
 
     /**
      * menu type

@@ -1,5 +1,5 @@
 <script lang="tsx" setup>
-import { reactive, ref, watch } from 'vue';
+import { ref } from 'vue';
 import dayjs from 'dayjs';
 import { omit } from 'lodash-es';
 import { fetchGetTheaterList } from '@/service/api';
@@ -29,7 +29,7 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
     const { records = [], current = 1, size = 10, total = 0 } = res.data || {};
     const summaryData = records.splice(0, 1)[0];
 
-    const createSummary = () => {
+    const createSummary: any = () => {
       return Object.entries(summaryData).reduce((acc, [key, value]) => {
         acc[key] = {
           value: <span>{value}</span>
@@ -158,7 +158,7 @@ const onSort = (value: any) => {
         striped
         :pagination="pagination"
         :row-key="item => item.id"
-        :summary="summaryCol"
+        :summary="summaryCol() as any"
         summary-placement="top"
         virtual-scroll
         class="sm:h-full"

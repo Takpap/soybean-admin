@@ -135,6 +135,7 @@ const local: App.I18n.Schema = {
     theater: '剧集看板',
     manage: '系统管理',
     manage_user: '用户管理',
+    manage_relation: '推广关联',
     'manage_user-detail': '用户详情',
     manage_role: '角色管理',
     manage_menu: '菜单管理',
@@ -284,6 +285,11 @@ const local: App.I18n.Schema = {
           enable: '启用',
           disable: '禁用'
         }
+      },
+      relation: {
+        title: '关联列表',
+        link: '推广链接',
+        advertiser_id: '广告主ID',
       },
       role: {
         title: '角色列表',
