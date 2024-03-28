@@ -158,7 +158,7 @@ const onSort = (value: any) => {
         striped
         :pagination="pagination"
         :row-key="item => item.id"
-        :summary="summaryCol() as any"
+        :summary="summaryCol"
         summary-placement="top"
         virtual-scroll
         class="sm:h-full"
