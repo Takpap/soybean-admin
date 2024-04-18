@@ -265,6 +265,7 @@ const local: App.I18n.Schema = {
     advertiser: {
       title: '优化师视角',
       advertiser_name: '优化师',
+      mark: '备注',
       advertiser_id: '账户',
       cost: '总消耗',
       pay_notify_amount: '总充值',

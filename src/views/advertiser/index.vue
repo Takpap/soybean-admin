@@ -1,8 +1,10 @@
 <script lang="tsx" setup>
-import { reactive, ref, watch } from 'vue';
+import { emit } from 'node:process';
+import { defineComponent, h, nextTick, ref } from 'vue';
+import { NInput } from 'naive-ui';
 import dayjs from 'dayjs';
 import { omit } from 'lodash-es';
-import { fetchGetAdvertiserList } from '@/service/api';
+import { createAdvertiserRelation, fetchGetAdvertiserList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -11,6 +13,55 @@ import AdvertiserSearch from './modules/advertiser-search.vue';
 const appStore = useAppStore();
 
 const summaryCol = ref(() => {});
+
+const postAdvertiserRelation = async row => {
+  const start_end = localStorage.getItem('start_end');
+  createAdvertiserRelation({ start_end, ...row });
+};
+
+const ShowOrEdit = defineComponent({
+  props: {
+    value: [String, Number],
+    onUpdateValue: [Function, Array]
+  },
+  emits: ['enter'],
+  setup(props, ctx) {
+    const isEdit = ref(false);
+    const inputRef = ref(null);
+    const inputValue = ref(props.value);
+    function handleOnClick() {
+      isEdit.value = true;
+      nextTick().then(() => {
+        inputRef.value.focus();
+      });
+    }
+    function handleChange() {
+      props.onUpdateValue(inputValue.value);
+      isEdit.value = false;
+    }
+    function handleBlur(e) {
+      props.onUpdateValue(inputValue.value);
+      isEdit.value = false;
+      ctx.emit('enter');
+    }
+
+    return () => (
+      <div style="min-height: 22px" onClick={handleOnClick}>
+        {isEdit.value ? (
+          <NInput
+            ref={inputRef}
+            value={inputValue.value}
+            onUpdateValue={v => (inputValue.value = v)}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+        ) : (
+          props.value
+        )}
+      </div>
+    );
+  }
+});
 
 const { columns, data, loading, pagination, searchParams, getData, resetSearchParams } = useTable<
   Api.SystemManage.Advertiser,
@@ -62,6 +113,20 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
       title: $t('page.advertiser.advertiser_id'),
       resizable: true,
       width: 180
+    },
+    {
+      key: 'mark',
+      title: $t('page.advertiser.mark'),
+      width: 150,
+      render(row) {
+        return (
+          <ShowOrEdit
+            value={row.mark}
+            onUpdateValue={(value: string) => (row.mark = value)}
+            onEnter={() => postAdvertiserRelation(row)}
+          />
+        );
+      }
     },
     {
       key: 'cost',

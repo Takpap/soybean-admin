@@ -265,6 +265,7 @@ const local: App.I18n.Schema = {
     advertiser: {
       title: 'advertiser_list',
       advertiser_name: 'advertiser_name',
+      mark: 'mark',
       advertiser_id: 'advertiser_id',
       cost: 'cost',
       pay_notify_amount: 'pay_amount',

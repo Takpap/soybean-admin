@@ -423,6 +423,7 @@ declare namespace App {
           title: string;
           advertiser_id: string;
           advertiser_name: string;
+          mark: string;
           pay_notify_amount: string;
           cost: string;
           profit: string;

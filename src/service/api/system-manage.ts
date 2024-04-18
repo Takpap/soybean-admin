@@ -9,6 +9,14 @@ export function fetchGetRoleList(params?: Api.SystemManage.RoleSearchParams) {
   });
 }
 
+export function createAdvertiserRelation(params?: Api.SystemManage.RelationSearchParams) {
+  return request({
+    url: `/advertiser/mark`,
+    method: 'post',
+    data: params
+  });
+}
+
 /**
  * get all roles
  *
@@ -39,6 +47,7 @@ export function fetchGetTheaterList(params?: Api.SystemManage.AdvertiserSearchPa
 
 /** get user list */
 export function fetchGetAdvertiserList(params?: Api.SystemManage.AdvertiserSearchParams) {
+  localStorage.setItem('start_end', `${params.start_date}_${params.end_date}`);
   return request<Api.SystemManage.UserList>({
     url: '/advertiser',
     method: 'get',

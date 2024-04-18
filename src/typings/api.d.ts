@@ -128,6 +128,7 @@ declare namespace Api {
       title: string;
       advertiser_id: string;
       advertiser_name: string;
+      mark: string;
       pay_notify_amount: number;
       cost: number;
       profit: string;
