@@ -1,10 +1,10 @@
 <script lang="tsx" setup>
 import { emit } from 'node:process';
 import { defineComponent, h, nextTick, ref } from 'vue';
-import { NInput } from 'naive-ui';
+import { NButton, NInput } from 'naive-ui';
 import dayjs from 'dayjs';
 import { omit } from 'lodash-es';
-import { createAdvertiserRelation, fetchGetAdvertiserList } from '@/service/api';
+import { createAdvertiserRelation, fetchGetAdvertiserList, delAdvertiserRelation } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -12,12 +12,18 @@ import AdvertiserSearch from './modules/advertiser-search.vue';
 
 const appStore = useAppStore();
 
-const summaryCol = ref(() => {});
+const summaryCol = ref(() => { });
 
 const postAdvertiserRelation = async row => {
   const start_end = localStorage.getItem('start_end');
   createAdvertiserRelation({ start_end, ...row });
 };
+
+const clearMark = async () => {
+  const start_end = localStorage.getItem('start_end');
+  await delAdvertiserRelation({ start_end });
+  getData()
+}
 
 const ShowOrEdit = defineComponent({
   props: {
@@ -82,9 +88,16 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
 
     const createSummary = () => {
       return Object.entries(summaryData).reduce((acc, [key, value]) => {
-        acc[key] = {
-          value: <span>{value}</span>
-        };
+        if (key === 'mark') {
+          acc[key] = {
+            value: <NButton quaternary type="warning" onClick={clearMark}>清除备注</NButton>
+          }
+        } else {
+          acc[key] = {
+            value: <span>{value}</span>
+          };
+        }
+
         return acc;
       }, {});
     };
@@ -118,6 +131,7 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
       key: 'mark',
       title: $t('page.advertiser.mark'),
       width: 150,
+      resizable: true,
       render(row) {
         return (
           <ShowOrEdit
@@ -213,22 +227,9 @@ const onSort = (value: any) => {
   <div class="flex-vertical-stretch gap-16px overflow-hidden <sm:overflow-auto">
     <AdvertiserSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" />
     <NCard :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
-      <NDataTable
-        :columns="columns"
-        :data="data"
-        size="small"
-        :flex-height="!appStore.isMobile"
-        :scroll-x="640"
-        :loading="loading"
-        striped
-        :pagination="pagination"
-        :row-key="item => item.id"
-        :summary="summaryCol"
-        summary-placement="top"
-        virtual-scroll
-        class="sm:h-full"
-        @update:sorter="onSort"
-      />
+      <NDataTable :columns="columns" :data="data" size="small" :flex-height="!appStore.isMobile" :scroll-x="640"
+        :loading="loading" striped :pagination="pagination" :row-key="item => item.id" :summary="summaryCol"
+        summary-placement="top" virtual-scroll class="sm:h-full" @update:sorter="onSort" />
     </NCard>
   </div>
 </template>

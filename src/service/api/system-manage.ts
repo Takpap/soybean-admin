@@ -17,6 +17,14 @@ export function createAdvertiserRelation(params?: Api.SystemManage.RelationSearc
   });
 }
 
+export function delAdvertiserRelation(params?: Api.SystemManage.RelationSearchParams) {
+  return request({
+    url: `/advertiser/mark`,
+    method: 'delete',
+    data: params
+  });
+}
+
 /**
  * get all roles
  *
