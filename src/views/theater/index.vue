@@ -152,7 +152,7 @@ const downloadCsv = () =>
 
 <template>
   <div class="flex-vertical-stretch gap-16px overflow-hidden <sm:overflow-auto">
-    <AdvertiserSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" />
+    <AdvertiserSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" @download="downloadCsv" />
     <NCard :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
       <NDataTable
         :columns="columns"
