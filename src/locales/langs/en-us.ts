@@ -137,6 +137,7 @@ const local: App.I18n.Schema = {
     manage_user: 'User Manage',
     manage_relation: 'Relation Manage',
     manage_config: 'Config Manage',
+    trend: 'Trend',
     'manage_user-detail': 'User Detail',
     manage_role: 'Role Manage',
     manage_menu: 'Menu Manage',

@@ -139,9 +139,15 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
   ]
 });
 
+const tableRef = ref<DataTableInst>()
+
 const onSort = (value: any) => {
   getData(omit(value, 'sorter'));
 };
+
+const downloadCsv = () =>
+  tableRef.value?.downloadCsv({ fileName: `${searchParams.start_date}_${searchParams.end_date}-剧集` })
+
 </script>
 
 <template>
@@ -163,6 +169,7 @@ const onSort = (value: any) => {
         virtual-scroll
         class="sm:h-full"
         @update:sorter="onSort"
+        ref="tableRef"
       />
     </NCard>
   </div>

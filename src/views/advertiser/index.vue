@@ -1,7 +1,7 @@
 <script lang="tsx" setup>
 import { emit } from 'node:process';
 import { defineComponent, h, nextTick, ref } from 'vue';
-import { NButton, NInput } from 'naive-ui';
+import { NButton, NInput, DataTableInst } from 'naive-ui';
 import dayjs from 'dayjs';
 import { omit } from 'lodash-es';
 import { createAdvertiserRelation, fetchGetAdvertiserList, delAdvertiserRelation } from '@/service/api';
@@ -13,6 +13,7 @@ import AdvertiserSearch from './modules/advertiser-search.vue';
 const appStore = useAppStore();
 
 const summaryCol = ref(() => { });
+const tableRef = ref<DataTableInst>()
 
 const postAdvertiserRelation = async row => {
   const start_end = localStorage.getItem('start_end');
@@ -221,15 +222,19 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
 const onSort = (value: any) => {
   getData(omit(value, 'sorter'));
 };
+
+const downloadCsv = () =>
+  tableRef.value?.downloadCsv({ fileName: `${searchParams.start_date}_${searchParams.end_date}-优化师` })
+
 </script>
 
 <template>
   <div class="flex-vertical-stretch gap-16px overflow-hidden <sm:overflow-auto">
-    <AdvertiserSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" />
+    <AdvertiserSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" @download="downloadCsv" />
     <NCard :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
       <NDataTable :columns="columns" :data="data" size="small" :flex-height="!appStore.isMobile" :scroll-x="640"
         :loading="loading" striped :pagination="pagination" :row-key="item => item.id" :summary="summaryCol"
-        summary-placement="top" virtual-scroll class="sm:h-full" @update:sorter="onSort" />
+        summary-placement="top" virtual-scroll class="sm:h-full" @update:sorter="onSort" ref="tableRef" />
     </NCard>
   </div>
 </template>

@@ -33,5 +33,6 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   "multi-menu_first_child": () => import("@/views/multi-menu/first_child/index.vue"),
   "multi-menu_second_child_home": () => import("@/views/multi-menu/second_child_home/index.vue"),
   theater: () => import("@/views/theater/index.vue"),
+  trend: () => import("@/views/trend/index.vue"),
   "user-center": () => import("@/views/user-center/index.vue"),
 };

@@ -9,6 +9,15 @@ export function fetchGetRoleList(params?: Api.SystemManage.RoleSearchParams) {
   });
 }
 
+export function getAdvertiserTrend(params?: { type: 'week' | 'month' | 'year' }) {
+  console.log('type', params);
+  return request({
+    url: `/advertiser/trend`,
+    method: 'get',
+    params
+  });
+}
+
 export function createAdvertiserRelation(params?: Api.SystemManage.RelationSearchParams) {
   return request({
     url: `/advertiser/mark`,

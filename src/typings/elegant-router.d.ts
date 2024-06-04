@@ -45,6 +45,7 @@ declare module "@elegant-router/types" {
     "multi-menu_second_child": "/multi-menu/second/child";
     "multi-menu_second_child_home": "/multi-menu/second/child/home";
     "theater": "/theater";
+    "trend": "/trend";
     "user-center": "/user-center";
   };
 
@@ -92,6 +93,7 @@ declare module "@elegant-router/types" {
     | "manage"
     | "multi-menu"
     | "theater"
+    | "trend"
     | "user-center"
   >;
 
@@ -128,6 +130,7 @@ declare module "@elegant-router/types" {
     | "multi-menu_first_child"
     | "multi-menu_second_child_home"
     | "theater"
+    | "trend"
     | "user-center"
   >;
 

@@ -43,7 +43,7 @@
     "release": "sa release",
     "typecheck": "vue-tsc --noEmit --skipLibCheck",
     "update-pkg": "sa update-pkg",
-		"dep": "git pull && pnpm build && rm -rf /opt/playlet-admin/dist && mv dist /opt/playlet-admin/"
+    "dep": "git pull && pnpm build && rm -rf /opt/playlet-admin/dist && mv dist /opt/playlet-admin/"
   },
   "dependencies": {
     "@better-scroll/core": "2.5.1",
@@ -63,6 +63,7 @@
     "pinia": "2.1.7",
     "vue": "3.4.19",
     "vue-draggable-plus": "0.3.5",
+    "vue-echarts": "^6.7.2",
     "vue-i18n": "9.9.1",
     "vue-router": "4.2.5"
   },

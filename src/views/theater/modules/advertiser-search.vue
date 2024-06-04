@@ -13,6 +13,7 @@ defineOptions({
 interface Emits {
   (e: 'reset'): void;
   (e: 'search'): void;
+  (e: 'download'): void;
 }
 
 const emit = defineEmits<Emits>();
@@ -48,6 +49,10 @@ async function reset() {
 async function search() {
   await validate();
   emit('search');
+}
+
+async function download() {
+  emit('download');
 }
 </script>
 
@@ -93,6 +98,9 @@ async function search() {
                 <icon-ic-round-search class="text-icon" />
               </template>
               {{ $t('common.search') }}
+            </NButton>
+            <NButton type="tertiary" @click="download">
+              下载
             </NButton>
           </NSpace>
         </NFormItemGi>

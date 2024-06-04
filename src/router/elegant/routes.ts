@@ -285,6 +285,17 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'trend',
+    path: '/trend',
+    component: 'layout.base$view.trend',
+    meta: {
+      title: 'trend',
+      i18nKey: 'route.trend',
+      icon: 'material-symbols:grouped-bar-chart-rounded',
+      roles: ['admin']
+    }
+  },
+  {
     name: 'user-center',
     path: '/user-center',
     component: 'layout.base$view.user-center',
