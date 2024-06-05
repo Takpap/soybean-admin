@@ -85,6 +85,10 @@ const fetchChartData = async () => {
         type: 'line',
         stack: 'Total',
         smooth: true,
+        label: {
+          show: true,
+          position: 'top'
+        },
         areaStyle: {
           color: new graphic.LinearGradient(0, 0, 0, 1, [
             { offset: 0, color: '#5470c6' },
@@ -122,6 +126,8 @@ const fetchChartData = async () => {
     ]
   };
 }
+
+const interval = setInterval(() => fetchChartData, 1000 * 60 * 3)
 
 </script>
 
