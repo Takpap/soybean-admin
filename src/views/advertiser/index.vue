@@ -1,10 +1,16 @@
 <script lang="tsx" setup>
 import { emit } from 'node:process';
 import { defineComponent, h, nextTick, ref } from 'vue';
-import { NButton, NInput, DataTableInst } from 'naive-ui';
+import type { DataTableInst } from 'naive-ui';
+import { NButton, NInput } from 'naive-ui';
 import dayjs from 'dayjs';
 import { omit } from 'lodash-es';
-import { createAdvertiserRelation, fetchGetAdvertiserList, delAdvertiserRelation } from '@/service/api';
+import {
+  createAdvertiserRelation,
+  delAdvertiserRelation,
+  fetchGetAdvertiserList,
+  getAdvertiserOrders
+} from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -12,8 +18,8 @@ import AdvertiserSearch from './modules/advertiser-search.vue';
 
 const appStore = useAppStore();
 
-const summaryCol = ref(() => { });
-const tableRef = ref<DataTableInst>()
+const summaryCol = ref(() => {});
+const tableRef = ref<DataTableInst>();
 
 const postAdvertiserRelation = async row => {
   const start_end = localStorage.getItem('start_end');
@@ -23,8 +29,8 @@ const postAdvertiserRelation = async row => {
 const clearMark = async () => {
   const start_end = localStorage.getItem('start_end');
   await delAdvertiserRelation({ start_end });
-  getData()
-}
+  getData();
+};
 
 const ShowOrEdit = defineComponent({
   props: {
@@ -70,6 +76,73 @@ const ShowOrEdit = defineComponent({
   }
 });
 
+const handleAction = async row => {
+  console.log('row', row);
+};
+
+const orderColumns = [
+  {
+    title: '广告 ID',
+    key: 'promotionId',
+    width: 170,
+    ellipsis: { tooltip: true },
+    fixed: 'left' // 固定左侧
+  },
+  {
+    title: '订单编号',
+    key: 'orderId',
+    width: 190
+  },
+  { title: '代理商 ID', key: 'agent_id', width: 100, ellipsis: { tooltip: true } },
+  { title: '用户 ID', key: 'user_id', width: 100, ellipsis: { tooltip: true } },
+  { title: '影院 ID', key: 'theater_id', width: 100, ellipsis: { tooltip: true } },
+  { title: '会员 ID', key: 'memberId', width: 250, ellipsis: { tooltip: true } },
+  { title: '支付金额', key: 'payNotifyAmount', width: 150, ellipsis: { tooltip: true } },
+  { title: '支付日期', key: 'payDate', width: 150, ellipsis: { tooltip: true } },
+  { title: '创建日期', key: 'createDate', width: 150, ellipsis: { tooltip: true } },
+  { title: '点击 ID', key: 'click_id', width: 250, ellipsis: { tooltip: true } },
+  { title: '公众号 ID', key: 'gzh_id', width: 200, ellipsis: { tooltip: true } },
+  { title: '公众号用户 ID', key: 'gzh_user_id', width: 250, ellipsis: { tooltip: true } },
+  { title: '影院名称', key: 'theater_name', width: 200, ellipsis: { tooltip: true } },
+  { title: '应用名称', key: 'app_name', width: 200, ellipsis: { tooltip: true } },
+  { title: '链接 ID', key: 'link_id', width: 200, ellipsis: { tooltip: true } },
+  { title: '公众号用户注册时间', key: 'gzh_user_register_time', width: 200, ellipsis: { tooltip: true } },
+  { title: '用户注册时间', key: 'user_register_time', width: 200, ellipsis: { tooltip: true } },
+  { title: '子代理商 ID', key: 'sub_agent_id', width: 100, ellipsis: { tooltip: true } },
+  { title: '退款日期时间', key: 'refund_date_time', width: 150, ellipsis: { tooltip: true } },
+  { title: '小程序应用 ID', key: 'mp_app_id', width: 200, ellipsis: { tooltip: true } },
+  { title: '小程序用户 ID', key: 'mp_open_id', width: 250, ellipsis: { tooltip: true } },
+  { title: '创建时间', key: 'create_time', width: 200, ellipsis: { tooltip: true } },
+  {
+    title: '操作',
+    key: 'actions',
+    width: 120,
+    fixed: 'right', // 固定右侧
+    render(row) {
+      return (
+        <NButton disabled={!row.click_id.startsWith('B.')} onClick={() => handleAction(row)}>
+          回传
+        </NButton>
+      );
+      // return h(NButton, { type: 'primary', size: 'small', onClick: () => handleAction(row) }, '回传');
+    }
+  }
+];
+
+const showModal = ref(false);
+const orderLoading = ref(false);
+const tableData = ref([]);
+
+const viewOrders = async row => {
+  showModal.value = true;
+  orderLoading.value = true;
+  const start_end = localStorage.getItem('start_end') || '_';
+  const [start_date, end_date] = start_end.split('_');
+  const { data } = await getAdvertiserOrders({ start_date, end_date, advertiser_id: row?.advertiser_id });
+  tableData.value = data;
+  orderLoading.value = false;
+};
+
 const { columns, data, loading, pagination, searchParams, getData, resetSearchParams } = useTable<
   Api.SystemManage.Advertiser,
   typeof fetchGetAdvertiserList,
@@ -91,8 +164,12 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
       return Object.entries(summaryData).reduce((acc, [key, value]) => {
         if (key === 'mark') {
           acc[key] = {
-            value: <NButton quaternary type="warning" onClick={clearMark}>清除备注</NButton>
-          }
+            value: (
+              <NButton quaternary type="warning" onClick={clearMark}>
+                清除备注
+              </NButton>
+            )
+          };
         } else {
           acc[key] = {
             value: <span>{value}</span>
@@ -215,6 +292,20 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
       title: $t('page.advertiser.reward_cost'),
       resizable: true,
       minWidth: 40
+    },
+    {
+      key: 'operate',
+      title: $t('common.operate'),
+      align: 'center',
+      width: 100,
+      render: row =>
+        /^\d.*?/.test(row.advertiser_id) && (
+          <div class="flex-center gap-8px">
+            <NButton type="primary" ghost size="small" onClick={() => viewOrders(row)}>
+              查看订单
+            </NButton>
+          </div>
+        )
     }
   ]
 });
@@ -224,17 +315,48 @@ const onSort = (value: any) => {
 };
 
 const downloadCsv = () =>
-  tableRef.value?.downloadCsv({ fileName: `${searchParams.start_date}_${searchParams.end_date}-优化师` })
-
+  tableRef.value?.downloadCsv({ fileName: `${searchParams.start_date}_${searchParams.end_date}-优化师` });
 </script>
 
 <template>
   <div class="flex-vertical-stretch gap-16px overflow-hidden <sm:overflow-auto">
-    <AdvertiserSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" @download="downloadCsv" />
+    <AdvertiserSearch
+      v-model:model="searchParams"
+      @reset="resetSearchParams"
+      @search="getData"
+      @download="downloadCsv"
+    />
     <NCard :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
-      <NDataTable :columns="columns" :data="data" size="small" :flex-height="!appStore.isMobile" :scroll-x="640"
-        :loading="loading" striped :pagination="pagination" :row-key="item => item.id" :summary="summaryCol"
-        summary-placement="top" virtual-scroll class="sm:h-full" @update:sorter="onSort" ref="tableRef" />
+      <NDataTable
+        ref="tableRef"
+        :columns="columns"
+        :data="data"
+        size="small"
+        :flex-height="!appStore.isMobile"
+        :scroll-x="640"
+        :loading="loading"
+        striped
+        :pagination="pagination"
+        :row-key="item => item.id"
+        :summary="summaryCol"
+        summary-placement="top"
+        virtual-scroll
+        class="sm:h-full"
+        @update:sorter="onSort"
+      />
     </NCard>
+
+    <n-modal v-model:show="showModal">
+      <n-card style="width: 80%" title="关联订单" size="huge" role="dialog" aria-modal="true">
+        <n-data-table
+          :max-height="550"
+          :columns="orderColumns"
+          :loading="orderLoading"
+          :data="tableData"
+          :scroll-x="1000"
+          :pagination="{ pageSizes: [10, 20, 30, 40, 50], 'show-size-picker': true }"
+        />
+      </n-card>
+    </n-modal>
   </div>
 </template>

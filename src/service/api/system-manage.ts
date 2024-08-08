@@ -18,6 +18,14 @@ export function getAdvertiserTrend(params?: { type: 'week' | 'month' | 'year' })
   });
 }
 
+export function getAdvertiserOrders(params?: { type: 'week' | 'month' | 'year' }) {
+  return request({
+    url: `/advertiser/orders`,
+    method: 'get',
+    params
+  });
+}
+
 export function createAdvertiserRelation(params?: Api.SystemManage.RelationSearchParams) {
   return request({
     url: `/advertiser/mark`,
