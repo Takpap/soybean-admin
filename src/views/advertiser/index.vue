@@ -94,7 +94,7 @@ const orderColumns = [
   { title: '用户 ID', key: 'user_id', width: 100, ellipsis: { tooltip: true } },
   { title: '影院 ID', key: 'theater_id', width: 100, ellipsis: { tooltip: true } },
   { title: '会员 ID', key: 'memberId', width: 250, ellipsis: { tooltip: true } },
-  { title: '支付金额', key: 'payNotifyAmount', width: 150, ellipsis: { tooltip: true } },
+  { title: '支付金额', key: 'payNotifyAmount', width: 150, ellipsis: { tooltip: true }, render: row => <span>{ (row['payNotifyAmount'] / 100).toFixed(2) }</span> },
   { title: '支付日期', key: 'payDate', width: 150, ellipsis: { tooltip: true } },
   { title: '创建日期', key: 'createDate', width: 150, ellipsis: { tooltip: true } },
   { title: '点击 ID', key: 'click_id', width: 250, ellipsis: { tooltip: true } },
