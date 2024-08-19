@@ -14,6 +14,7 @@ import {
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
 import { $t } from '@/locales';
+import { request } from '@/service/request';
 import AdvertiserSearch from './modules/advertiser-search.vue';
 
 const appStore = useAppStore();
@@ -76,10 +77,6 @@ const ShowOrEdit = defineComponent({
   }
 });
 
-const handleAction = async row => {
-  console.log('row', row);
-};
-
 const orderColumns = [
   {
     title: '广告 ID',
@@ -120,7 +117,7 @@ const orderColumns = [
     fixed: 'right', // 固定右侧
     render(row) {
       return (
-        <NButton disabled={!row.click_id.startsWith('B.')} onClick={() => handleAction(row)}>
+           row.click_id.startsWith('B.') && <NButton disabled={row.callback} onClick={() => handleAction(row)}>
           回传
         </NButton>
       );
@@ -133,14 +130,27 @@ const showModal = ref(false);
 const orderLoading = ref(false);
 const tableData = ref([]);
 
+let adRow = null
+
 const viewOrders = async row => {
   showModal.value = true;
   orderLoading.value = true;
+  adRow = row
   const start_end = localStorage.getItem('start_end') || '_';
   const [start_date, end_date] = start_end.split('_');
   const { data } = await getAdvertiserOrders({ start_date, end_date, advertiser_id: row?.advertiser_id });
   tableData.value = data;
   orderLoading.value = false;
+};
+
+const handleAction = async row => {
+  const { data } = await request({ method: 'get', url: '/advertiser/report', params: row });
+  if (data.code === 0) {
+    window.$message?.success('回传成功');
+    viewOrders(adRow);
+  } else {
+    window.$message?.error('回传失败');
+  }
 };
 
 const { columns, data, loading, pagination, searchParams, getData, resetSearchParams } = useTable<
@@ -354,7 +364,13 @@ const downloadCsv = () =>
           :loading="orderLoading"
           :data="tableData"
           :scroll-x="1000"
-          :pagination="{ pageSizes: [10, 20, 30, 40, 50], 'show-size-picker': true }"
+          :pagination="{
+            pageSizes: [10, 20, 30, 40, 50],
+            showSizePicker: true,
+            prefix: () => {
+              return `订单总数 ${tableData.length}`;
+            }
+          }"
         />
       </n-card>
     </n-modal>
