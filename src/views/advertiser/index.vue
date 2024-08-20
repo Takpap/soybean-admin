@@ -92,15 +92,33 @@ const orderColumns = [
   },
   { title: '代理商 ID', key: 'agent_id', width: 100, ellipsis: { tooltip: true } },
   { title: '用户 ID', key: 'user_id', width: 100, ellipsis: { tooltip: true } },
-  { title: '影院 ID', key: 'theater_id', width: 100, ellipsis: { tooltip: true } },
+  { title: '影视 ID', key: 'theater_id', width: 100, ellipsis: { tooltip: true } },
   { title: '会员 ID', key: 'memberId', width: 250, ellipsis: { tooltip: true } },
-  { title: '支付金额', key: 'payNotifyAmount', width: 150, ellipsis: { tooltip: true }, render: row => <span>{ (row['payNotifyAmount'] / 100).toFixed(2) }</span> },
-  { title: '支付日期', key: 'payDate', width: 150, ellipsis: { tooltip: true } },
-  { title: '创建日期', key: 'createDate', width: 150, ellipsis: { tooltip: true } },
+  {
+    title: '支付金额',
+    key: 'payNotifyAmount',
+    width: 120,
+    ellipsis: { tooltip: true },
+    render: (row: any) => <span>{(row.payNotifyAmount / 100).toFixed(2)}</span>
+  },
+  {
+    title: '支付日期',
+    key: 'payDate',
+    width: 180,
+    ellipsis: { tooltip: true },
+    render: (row: any) => <span>{dayjs.unix(row.payDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+  },
+  {
+    title: '创建日期',
+    key: 'createDate',
+    width: 180,
+    ellipsis: { tooltip: true },
+    render: (row: any) => <span>{dayjs.unix(row.payDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+  },
   { title: '点击 ID', key: 'click_id', width: 250, ellipsis: { tooltip: true } },
   { title: '公众号 ID', key: 'gzh_id', width: 200, ellipsis: { tooltip: true } },
   { title: '公众号用户 ID', key: 'gzh_user_id', width: 250, ellipsis: { tooltip: true } },
-  { title: '影院名称', key: 'theater_name', width: 200, ellipsis: { tooltip: true } },
+  { title: '影视名称', key: 'theater_name', width: 200, ellipsis: { tooltip: true } },
   { title: '应用名称', key: 'app_name', width: 200, ellipsis: { tooltip: true } },
   { title: '链接 ID', key: 'link_id', width: 200, ellipsis: { tooltip: true } },
   { title: '公众号用户注册时间', key: 'gzh_user_register_time', width: 200, ellipsis: { tooltip: true } },
@@ -117,9 +135,11 @@ const orderColumns = [
     fixed: 'right', // 固定右侧
     render(row) {
       return (
-           row.click_id.startsWith('B.') && <NButton disabled={row.callback} onClick={() => handleAction(row)}>
-          回传
-        </NButton>
+        row.click_id.startsWith('B.') && (
+          <NButton disabled={row.callback} onClick={() => handleAction(row)}>
+            回传
+          </NButton>
+        )
       );
       // return h(NButton, { type: 'primary', size: 'small', onClick: () => handleAction(row) }, '回传');
     }
@@ -130,12 +150,12 @@ const showModal = ref(false);
 const orderLoading = ref(false);
 const tableData = ref([]);
 
-let adRow = null
+let adRow = null;
 
 const viewOrders = async row => {
   showModal.value = true;
   orderLoading.value = true;
-  adRow = row
+  adRow = row;
   const start_end = localStorage.getItem('start_end') || '_';
   const [start_date, end_date] = start_end.split('_');
   const { data } = await getAdvertiserOrders({ start_date, end_date, advertiser_id: row?.advertiser_id });
