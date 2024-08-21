@@ -1,6 +1,6 @@
 <script lang="tsx" setup>
 import { emit } from 'node:process';
-import { defineComponent, h, nextTick, ref, onMounted } from 'vue';
+import { defineComponent, h, nextTick, onMounted, ref } from 'vue';
 import type { DataTableInst } from 'naive-ui';
 import { NButton, NInput, NSelect } from 'naive-ui';
 import dayjs from 'dayjs';
@@ -149,24 +149,24 @@ const orderColumns = [
 const showModal = ref(false);
 const orderLoading = ref(false);
 const tableData = ref([]);
-const ruleOptions = ref([])
-
+const ruleOptions = ref([]);
 
 onMounted(async () => {
-  const rules = await request({ method: 'get', url: '/setting'  })
-  ruleOptions.value = rules.data?.map(i => ({ label: i.name, value: i.id }))
-  console.log(ruleOptions)
-})
+  const rules = await request({ method: 'get', url: '/setting' });
+  ruleOptions.value = rules.data?.map(i => ({ label: i.name, value: i.id }));
+});
 
-const onRuleChange = async (row) => {
-  console.log(row)
-  // await request({ method: 'get', url: '/advertiser/rule'  })
-  // window.$message.success('规则修改成功')
-}
+const onRuleChange = async ({ row, rule }) => {
+  const { advertiser_id } = row;
 
-let adRow = null;
+  await request({ url: '/advertiser/callback_rule', method: 'get', params: { advertiser_id, rule } });
+  row.rule = rule;
+  window.$message.success('规则修改成功');
+};
 
-const viewOrders = async row => {
+let adRow = null as any;
+
+const viewOrders = async (row: any) => {
   showModal.value = true;
   orderLoading.value = true;
   adRow = row;
@@ -341,7 +341,10 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
       key: 'rule',
       title: '回传规则',
       width: 100,
-      render: row => <NSelect value={row.rule} options={ruleOptions.value} onChange={() => onRuleChange(row)} />
+      render: row =>
+        /^\d.*?/.test(row.advertiser_id) && (
+          <NSelect value={row.rule} options={ruleOptions.value} onChange={rule => onRuleChange({ row, rule })} />
+        )
     },
     {
       key: 'operate',
