@@ -1,8 +1,8 @@
 <script lang="tsx" setup>
 import { emit } from 'node:process';
-import { defineComponent, h, nextTick, ref } from 'vue';
+import { defineComponent, h, nextTick, ref, onMounted } from 'vue';
 import type { DataTableInst } from 'naive-ui';
-import { NButton, NInput } from 'naive-ui';
+import { NButton, NInput, NSelect } from 'naive-ui';
 import dayjs from 'dayjs';
 import { omit } from 'lodash-es';
 import {
@@ -149,6 +149,20 @@ const orderColumns = [
 const showModal = ref(false);
 const orderLoading = ref(false);
 const tableData = ref([]);
+const ruleOptions = ref([])
+
+
+onMounted(async () => {
+  const rules = await request({ method: 'get', url: '/setting'  })
+  ruleOptions.value = rules.data?.map(i => ({ label: i.name, value: i.id }))
+  console.log(ruleOptions)
+})
+
+const onRuleChange = async (row) => {
+  console.log(row)
+  // await request({ method: 'get', url: '/advertiser/rule'  })
+  // window.$message.success('规则修改成功')
+}
 
 let adRow = null;
 
@@ -322,6 +336,12 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
       title: $t('page.advertiser.reward_cost'),
       resizable: true,
       minWidth: 40
+    },
+    {
+      key: 'rule',
+      title: '回传规则',
+      width: 100,
+      render: row => <NSelect value={row.rule} options={ruleOptions.value} onChange={() => onRuleChange(row)} />
     },
     {
       key: 'operate',

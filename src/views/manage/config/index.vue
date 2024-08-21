@@ -7,6 +7,14 @@ const loading = ref(false);
 const dynamic_loading = ref(false);
 const page_loading = ref(false);
 
+type config = {
+  name: string;
+  min?: number;
+  max?: number;
+  total?: number;
+  count?: number;
+};
+
 const model = reactive({
   ratioA: -1,
   ratioB: -1,
@@ -14,7 +22,7 @@ const model = reactive({
 });
 
 const dynamicForm = reactive({
-  configs: []
+  configs: [] as config[]
 });
 
 const formRef = ref(null);
@@ -43,7 +51,7 @@ const removeItem = (index: number) => {
 };
 
 const addItem = () => {
-  dynamicForm.configs.push({ profit: null, total: null, count: null });
+  dynamicForm.configs.push({ name: '', min: undefined, max: undefined, total: undefined, count: undefined });
 };
 
 const handleValidateClick = async () => {
@@ -68,9 +76,25 @@ const handleValidateClick = async () => {
       <n-form v-else ref="formRef" :model="dynamicForm" size="small" :show-feedback="false">
         <n-form-item v-for="(item, index) in dynamicForm.configs" :key="index" :path="`configs[${index}].hobby`">
           <div class="flex-inline justify-center gap-2 whitespace-nowrap items-center">
-            <span>当金额小于等于</span>
-            <n-input-number v-model:value="item.profit" clearable :precision="0" />
-            <span>时，每</span>
+            <n-input-group style="width: unset">
+              <n-tag type="primary">
+                规则名称
+              </n-tag>
+              <n-input v-model:value="item.name"laceholder="请输入" :style="{ width: '50%' }"  />
+            </n-input-group>
+            <span>当金额在</span>
+            <n-input-number v-model:value="item.min" clearable :precision="0">
+              <template #prefix>
+                ￥
+              </template>
+            </n-input-number>
+            <span>至</span>
+            <n-input-number v-model:value="item.max" clearable :precision="0">
+              <template #prefix>
+                ￥
+              </template>
+            </n-input-number>
+            <span>范围时，每</span>
             <n-input-number v-model:value="item.total" :min="1" clearable :precision="0" />
             <span>笔订单扣掉</span>
             <n-input-number v-model:value="item.count" :min="0" :max="item.total || 0" clearable :precision="0" />
