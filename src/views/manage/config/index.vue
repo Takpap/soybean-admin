@@ -46,8 +46,18 @@ async function submit() {
   loading.value = false;
 }
 
-const removeItem = (index: number) => {
-  dynamicForm.configs.splice(index, 1);
+const removeItem = async (index: number) => {
+  const configId = dynamicForm.configs[index]?.id;
+
+  if (configId) {
+    const { data } = await request({ method: 'delete', url: `setting/${configId}` });
+    if (data) {
+      dynamicForm.configs.splice(index, 1);
+      window.$message?.success('删除成功');
+    }
+  } else {
+    dynamicForm.configs.splice(index, 1);
+  }
 };
 
 const addItem = () => {
@@ -77,22 +87,16 @@ const handleValidateClick = async () => {
         <n-form-item v-for="(item, index) in dynamicForm.configs" :key="index" :path="`configs[${index}].hobby`">
           <div class="flex-inline justify-center gap-2 whitespace-nowrap items-center">
             <n-input-group style="width: unset">
-              <n-tag type="primary">
-                规则名称
-              </n-tag>
-              <n-input v-model:value="item.name"laceholder="请输入" :style="{ width: '50%' }"  />
+              <n-tag type="primary">规则名称</n-tag>
+              <n-input v-model:value="item.name" laceholder="请输入" :style="{ width: '50%' }" />
             </n-input-group>
             <span>当金额在</span>
             <n-input-number v-model:value="item.min" clearable :precision="0">
-              <template #prefix>
-                ￥
-              </template>
+              <template #prefix>￥</template>
             </n-input-number>
             <span>至</span>
             <n-input-number v-model:value="item.max" clearable :precision="0">
-              <template #prefix>
-                ￥
-              </template>
+              <template #prefix>￥</template>
             </n-input-number>
             <span>范围时，每</span>
             <n-input-number v-model:value="item.total" :min="1" clearable :precision="0" />

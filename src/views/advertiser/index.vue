@@ -164,6 +164,14 @@ const onRuleChange = async ({ row, rule }) => {
   window.$message.success('规则修改成功');
 };
 
+const onRuleClear = async (row) => {
+  const { advertiser_id } = row;
+
+  await request({ url: '/advertiser/callback_rule', method: 'delete', params: { advertiser_id } });
+  row.rule = null;
+  window.$message.success('规则删除成功');
+};
+
 let adRow = null as any;
 
 const viewOrders = async (row: any) => {
@@ -343,7 +351,13 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
       width: 100,
       render: row =>
         /^\d.*?/.test(row.advertiser_id) && (
-          <NSelect value={row.rule} options={ruleOptions.value} onChange={rule => onRuleChange({ row, rule })} />
+          <NSelect
+            value={row.rule}
+            options={ruleOptions.value}
+            clearable
+            onClear={() => onRuleClear(row)}
+            onChange={rule => onRuleChange({ row, rule })}
+          />
         )
     },
     {
