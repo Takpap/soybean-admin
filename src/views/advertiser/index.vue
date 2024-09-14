@@ -1,8 +1,8 @@
 <script lang="tsx" setup>
 import { emit } from 'node:process';
-import { defineComponent, h, nextTick, onMounted, ref } from 'vue';
+import { defineComponent, h, nextTick, onMounted, reactive, ref } from 'vue';
 import type { DataTableInst } from 'naive-ui';
-import { NButton, NInput, NSelect } from 'naive-ui';
+import { c, NButton, NInput, NSelect } from 'naive-ui';
 import dayjs from 'dayjs';
 import { omit } from 'lodash-es';
 import {
@@ -147,7 +147,9 @@ const orderColumns = [
 ];
 
 const showModal = ref(false);
+const showRuleModal = ref(false);
 const orderLoading = ref(false);
+let row = reactive({})
 const tableData = ref([]);
 const ruleOptions = ref([]);
 
@@ -156,16 +158,19 @@ onMounted(async () => {
   ruleOptions.value = rules.data?.map(i => ({ label: i.name, value: i.id }));
 });
 
-const onRuleChange = async ({ row, rule }) => {
-  const { advertiser_id } = row;
+const onRuleChange = async ({ row: value, rule }) => {
+  const { advertiser_id } = value;
 
-  await request({ url: '/advertiser/callback_rule', method: 'get', params: { advertiser_id, rule } });
+  await request({ url: '/advertiser/callback_rule', method: 'post', data: { advertiser_id, rule } });
   row.rule = rule;
+  row.rule_name = ruleOptions.value?.filter(i => rule.includes(i.value)).map(i => i.label);
   window.$message.success('规则修改成功');
 };
 
-const onRuleClear = async (row) => {
-  const { advertiser_id } = row;
+const onRuleClear = async (row: value) => {
+  console.log('value', value)
+
+  const { advertiser_id } = value;
 
   await request({ url: '/advertiser/callback_rule', method: 'delete', params: { advertiser_id } });
   row.rule = null;
@@ -184,6 +189,11 @@ const viewOrders = async (row: any) => {
   tableData.value = data;
   orderLoading.value = false;
 };
+
+const viewReportRule = value => {
+  showRuleModal.value = true;
+  row = value;
+}
 
 const handleAction = async row => {
   const { data } = await request({ method: 'get', url: '/advertiser/report', params: row });
@@ -346,31 +356,28 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
       minWidth: 40
     },
     {
-      key: 'rule',
       title: '回传规则',
       width: 100,
+      ellipsis: {
+        tooltip: true
+      },
       render: row =>
         /^\d.*?/.test(row.advertiser_id) && (
-          <NSelect
-            value={row.rule}
-            options={ruleOptions.value}
-            clearable
-            onClear={() => onRuleClear(row)}
-            onChange={rule => onRuleChange({ row, rule })}
-          />
+          <span>{ row.rule_name?.join('，') }</span>
         )
     },
     {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 100,
+      width: 180,
       render: row =>
         /^\d.*?/.test(row.advertiser_id) && (
           <div class="flex-center gap-8px">
             <NButton type="primary" ghost size="small" onClick={() => viewOrders(row)}>
               查看订单
             </NButton>
+            <NButton ghost size="small" onClick={() => viewReportRule(row)}>回传规则</NButton>
           </div>
         )
     }
@@ -428,6 +435,19 @@ const downloadCsv = () =>
               return `订单总数 ${tableData.length}`;
             }
           }"
+        />
+      </n-card>
+    </n-modal>
+
+    <n-modal v-model:show="showRuleModal">
+      <n-card style="width: 80%" title="回传规则" size="huge" role="dialog" aria-modal="true">
+        <NSelect
+          :value="row.rule"
+          :options="ruleOptions"
+          clearable
+          multiple
+          @clear="onRuleClear"
+          @change="rule => onRuleChange({ row, rule })"
         />
       </n-card>
     </n-modal>
