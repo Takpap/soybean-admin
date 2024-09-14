@@ -98,6 +98,7 @@ const orderColumns = [
     title: '支付金额',
     key: 'payNotifyAmount',
     width: 120,
+    sorter: true,
     ellipsis: { tooltip: true },
     render: (row: any) => <span>{(row.payNotifyAmount / 100).toFixed(2)}</span>
   },
