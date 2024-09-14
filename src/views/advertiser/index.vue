@@ -174,6 +174,7 @@ const onRuleClear = async (row: value) => {
 
   await request({ url: '/advertiser/callback_rule', method: 'delete', params: { advertiser_id } });
   row.rule = null;
+  row.rule_name = '';
   window.$message.success('规则删除成功');
 };
 
@@ -440,7 +441,7 @@ const downloadCsv = () =>
     </n-modal>
 
     <n-modal v-model:show="showRuleModal" width="60%">
-      <n-card style="width: 80%" title="回传规则" size="medium" role="dialog" aria-modal="true">
+      <n-card style="width: 50%" title="回传规则" role="dialog" aria-modal="true">
         <NSelect
           :value="row.rule"
           :options="ruleOptions"
