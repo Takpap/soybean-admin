@@ -116,7 +116,7 @@ const handleValidateClick = async () => {
               <template #prefix>￥</template>
             </n-input-number>
             <span>范围时，每</span>
-            <n-input-number v-model:value="item.total" :min="1" clearable :precision="0" />
+            <n-input-number v-model:value="item.total" :min="2" clearable :precision="0" />
             <span>笔订单扣掉</span>
             <n-input-number v-model:value="item.count" :min="0" :max="item.total || 0" clearable :precision="0" />
             <span>笔</span>
