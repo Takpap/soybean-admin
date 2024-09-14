@@ -439,8 +439,8 @@ const downloadCsv = () =>
       </n-card>
     </n-modal>
 
-    <n-modal v-model:show="showRuleModal">
-      <n-card style="width: 80%" title="回传规则" size="huge" role="dialog" aria-modal="true">
+    <n-modal v-model:show="showRuleModal" width="60%">
+      <n-card style="width: 80%" title="回传规则" size="medium" role="dialog" aria-modal="true">
         <NSelect
           :value="row.rule"
           :options="ruleOptions"
