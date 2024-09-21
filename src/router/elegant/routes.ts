@@ -274,6 +274,15 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
+    name: 'novel',
+    path: '/novel',
+    component: 'layout.base$view.novel',
+    meta: {
+      title: 'novel',
+      i18nKey: 'route.novel'
+    }
+  },
+  {
     name: 'theater',
     path: '/theater',
     component: 'layout.base$view.theater',
