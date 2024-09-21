@@ -127,7 +127,7 @@ const orderColumns = [
   { title: '退款日期时间', key: 'refund_date_time', width: 150, ellipsis: { tooltip: true } },
   { title: '小程序应用 ID', key: 'mp_app_id', width: 200, ellipsis: { tooltip: true } },
   { title: '小程序用户 ID', key: 'mp_open_id', width: 250, ellipsis: { tooltip: true } },
-  { title: '创建时间', key: 'create_time', width: 200, ellipsis: { tooltip: true } },
+  { title: '创建时间', key: 'create_time', width: 200, ellipsis: { tooltip: true } }
   // {
   //   title: '操作',
   //   key: 'actions',
@@ -164,7 +164,7 @@ const onRuleChange = async ({ row, rule }) => {
   window.$message.success('规则修改成功');
 };
 
-const onRuleClear = async (row) => {
+const onRuleClear = async row => {
   const { advertiser_id } = row;
 
   await request({ url: '/advertiser/callback_rule', method: 'delete', params: { advertiser_id } });
@@ -344,36 +344,36 @@ const { columns, data, loading, pagination, searchParams, getData, resetSearchPa
       title: $t('page.advertiser.reward_cost'),
       resizable: true,
       minWidth: 40
-    },
-    {
-      key: 'rule',
-      title: '回传规则',
-      width: 100,
-      render: row =>
-        /^\d.*?/.test(row.advertiser_id) && (
-          <NSelect
-            value={row.rule}
-            options={ruleOptions.value}
-            clearable
-            onClear={() => onRuleClear(row)}
-            onChange={rule => onRuleChange({ row, rule })}
-          />
-        )
-    },
-    {
-      key: 'operate',
-      title: $t('common.operate'),
-      align: 'center',
-      width: 100,
-      render: row =>
-        /^\d.*?/.test(row.advertiser_id) && (
-          <div class="flex-center gap-8px">
-            <NButton type="primary" ghost size="small" onClick={() => viewOrders(row)}>
-              查看订单
-            </NButton>
-          </div>
-        )
     }
+    // {
+    //   key: 'rule',
+    //   title: '回传规则',
+    //   width: 100,
+    //   render: row =>
+    //     /^\d.*?/.test(row.advertiser_id) && (
+    //       <NSelect
+    //         value={row.rule}
+    //         options={ruleOptions.value}
+    //         clearable
+    //         onClear={() => onRuleClear(row)}
+    //         onChange={rule => onRuleChange({ row, rule })}
+    //       />
+    //     )
+    // },
+    // {
+    //   key: 'operate',
+    //   title: $t('common.operate'),
+    //   align: 'center',
+    //   width: 100,
+    //   render: row =>
+    //     /^\d.*?/.test(row.advertiser_id) && (
+    //       <div class="flex-center gap-8px">
+    //         <NButton type="primary" ghost size="small" onClick={() => viewOrders(row)}>
+    //           查看订单
+    //         </NButton>
+    //       </div>
+    //     )
+    // }
   ]
 });
 
