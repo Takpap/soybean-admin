@@ -26,6 +26,14 @@ export function getAdvertiserOrders(params?: { type: 'week' | 'month' | 'year' }
   });
 }
 
+export function getNovelAdvertiserOrders(params?: { type: 'week' | 'month' | 'year' }) {
+  return request({
+    url: `/novel/orders`,
+    method: 'get',
+    params
+  });
+}
+
 export function createAdvertiserRelation(params?: Api.SystemManage.RelationSearchParams) {
   return request({
     url: `/advertiser/mark`,
@@ -75,6 +83,15 @@ export function fetchGetAdvertiserList(params?: Api.SystemManage.AdvertiserSearc
   localStorage.setItem('start_end', `${params.start_date}_${params.end_date}`);
   return request<Api.SystemManage.UserList>({
     url: '/advertiser',
+    method: 'get',
+    params
+  });
+}
+
+export function fetchGetNovelAdvertiserList(params?: Api.SystemManage.AdvertiserSearchParams) {
+  localStorage.setItem('start_end', `${params.start_date}_${params.end_date}`);
+  return request<Api.SystemManage.UserList>({
+    url: '/novel',
     method: 'get',
     params
   });

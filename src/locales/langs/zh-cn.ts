@@ -132,6 +132,7 @@ const local: App.I18n.Schema = {
     function_tab: '标签页',
     'function_multi-tab': '多标签页',
     advertiser: '优化师看板',
+    novel: '优化师看板(小说)',
     theater: '剧集看板',
     manage: '系统管理',
     manage_user: '用户管理',

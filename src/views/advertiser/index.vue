@@ -161,7 +161,7 @@ onMounted(async () => {
 const onRuleChange = async ({ row: value, rule }) => {
   const { advertiser_id } = value;
 
-  await request({ url: '/advertiser/callback_rule', method: 'post', data: { advertiser_id, rule } });
+  await request({ url: '/advertiser/callback_rule', method: 'get', params: { advertier_id, rule } });
   row.rule = rule;
   row.rule_name = ruleOptions.value?.filter(i => rule.includes(i.value)).map(i => i.label);
   window.$message.success('规则修改成功');
