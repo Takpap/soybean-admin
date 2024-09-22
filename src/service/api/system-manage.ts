@@ -192,17 +192,25 @@ export function changePwd(params: any) {
   });
 }
 
-export function fetchRatio() {
+export function fetchRatio(params: any) {
   return request({
-    url: '/ratio',
-    method: 'get'
+    url: '/config',
+    method: 'get',
+    params
   });
 }
 
 export function updateRatio(params: any) {
+  console.log('params', params);
+  const data = { ...params };
+  delete data.type;
+  delete data.id;
   return request({
-    url: '/ratio',
-    method: 'put',
-    params
+    url: `/config?id=${params.id}`,
+    method: 'patch',
+    data: {
+      key: params.type,
+      value: JSON.stringify(data)
+    }
   });
 }

@@ -10,7 +10,8 @@ import SvgIcon from '@/components/custom/svg-icon.vue';
  * @param routes Auth routes
  * @param roles Roles
  */
-export function filterAuthRoutesByRoles(routes: ElegantConstRoute[], roles: string[]) {
+export function filterAuthRoutesByRoles(routes: ElegantConstRoute[], roles: string[], menus: string[]) {
+  console.log('routes, roles, menus', routes, roles, menus);
   const SUPER_ROLE = 'R_SUPER';
 
   // if the user is super admin, then it is allowed to access all routes
@@ -18,7 +19,7 @@ export function filterAuthRoutesByRoles(routes: ElegantConstRoute[], roles: stri
     return routes;
   }
 
-  return routes.flatMap(route => filterAuthRouteByRoles(route, roles));
+  return routes.flatMap(route => filterAuthRouteByRoles(route, roles, menus));
 }
 
 /**
@@ -27,7 +28,7 @@ export function filterAuthRoutesByRoles(routes: ElegantConstRoute[], roles: stri
  * @param route Auth route
  * @param roles Roles
  */
-function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]) {
+function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[], menus: string[]) {
   const routeRoles = (route.meta && route.meta.roles) || [];
 
   // if the route's "roles" is empty, then it is allowed to access
@@ -36,7 +37,7 @@ function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]) {
   }
 
   // if the user's role is included in the route's "roles", then it is allowed to access
-  const hasPermission = routeRoles.some(role => roles.includes(role));
+  const hasPermission = routeRoles.some(role => roles.includes(role) || menus?.includes(route.meta?.title));
 
   const filterRoute = { ...route };
 

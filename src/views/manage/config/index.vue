@@ -16,6 +16,14 @@ type config = {
 };
 
 const model = reactive({
+  id: '',
+  ratioA: -1,
+  ratioB: -1,
+  ratioC: -1
+});
+
+const novel_model = reactive({
+  id: '',
   ratioA: -1,
   ratioB: -1,
   ratioC: -1
@@ -29,19 +37,28 @@ const formRef = ref(null);
 
 onMounted(async () => {
   page_loading.value = true;
-  const { data } = await fetchRatio();
-  model.ratioA = Number(data.a);
-  model.ratioB = Number(data.b);
-  model.ratioC = Number(data.c);
+  const { data: playlet } = await fetchRatio({ type: 'playlet' });
+  const data = playlet.value;
+  model.id = playlet.id;
+  model.ratioA = Number(data.ratioA);
+  model.ratioB = Number(data.ratioB);
+  model.ratioC = Number(data.ratioC);
+
+  const { data: novel } = await fetchRatio({ type: 'novel' });
+  const novel_data = novel.value;
+  novel_model.id = novel.id;
+  novel_model.ratioA = Number(novel_data.ratioA);
+  novel_model.ratioB = Number(novel_data.ratioB);
+  novel_model.ratioC = Number(novel_data.ratioC);
 
   const result = await request({ method: 'get', url: 'setting' });
   dynamicForm.configs = result.data;
   page_loading.value = false;
 });
 
-async function submit() {
+async function submit(type: string) {
   loading.value = true;
-  await updateRatio(model);
+  await updateRatio({ ...(type === 'playlet' ? model : novel_model), type });
   window.$message?.success('修改成功');
   loading.value = false;
 }
@@ -119,7 +136,7 @@ const handleValidateClick = async () => {
         </n-form-item>
       </n-form>
     </NCard>
-    <NCard :bordered="false" title="计算系数" size="small" class="card-wrapper sm:flex-1">
+    <NCard :bordered="false" title="短剧计算系数" size="small" class="card-wrapper sm:flex-1">
       <n-skeleton v-if="page_loading" text size="large" :repeat="4" width="52%" />
       <n-form v-else :model="model">
         <n-form-item path="ratioA" label="A">
@@ -132,7 +149,24 @@ const handleValidateClick = async () => {
           <NInputNumber v-model:value="model.ratioC" @keydown.enter.prevent />
         </n-form-item>
         <n-form-item>
-          <NButton type="primary" :loading="loading" @click="submit">确定</NButton>
+          <NButton type="primary" :loading="loading" @click="submit('playlet')">确定</NButton>
+        </n-form-item>
+      </n-form>
+    </NCard>
+    <NCard :bordered="false" title="小说计算系数" size="small" class="card-wrapper sm:flex-1">
+      <n-skeleton v-if="page_loading" text size="large" :repeat="4" width="52%" />
+      <n-form v-else :model="novel_model">
+        <n-form-item path="ratioA" label="A">
+          <NInputNumber v-model:value="novel_model.ratioA" @keydown.enter.prevent />
+        </n-form-item>
+        <n-form-item path="ratioB" label="B">
+          <NInputNumber v-model:value="novel_model.ratioB" @keydown.enter.prevent />
+        </n-form-item>
+        <n-form-item first path="ratioC" label="C">
+          <NInputNumber v-model:value="novel_model.ratioC" @keydown.enter.prevent />
+        </n-form-item>
+        <n-form-item>
+          <NButton type="primary" :loading="loading" @click="submit('novel')">确定</NButton>
         </n-form-item>
       </n-form>
     </NCard>

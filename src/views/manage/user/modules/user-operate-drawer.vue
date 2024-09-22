@@ -50,7 +50,17 @@ const title = computed(() => {
 
 type Model = Pick<
   Api.SystemManage.User,
-  'username' | 'shortName' | 'alias' | 'phone' | 'email' | 'roles' | 'status' | 'password' | 'remark' | 'members'
+  | 'username'
+  | 'shortName'
+  | 'alias'
+  | 'phone'
+  | 'email'
+  | 'roles'
+  | 'status'
+  | 'password'
+  | 'remark'
+  | 'members'
+  | 'menus'
 >;
 
 const model: Model = reactive(createDefaultModel());
@@ -66,7 +76,8 @@ function createDefaultModel(): Model {
     email: '',
     password: '123456',
     roles: '',
-    status: 1
+    status: 1,
+    menus: []
   };
 }
 
@@ -104,7 +115,10 @@ function handleUpdateModelWhenEdit() {
   }
 
   if (props.operateType === 'edit' && props.rowData) {
-    Object.assign(model, omitBy(props.rowData, (value, key) => key.includes('text')));
+    Object.assign(
+      model,
+      omitBy(props.rowData, (value, key) => key.includes('text'))
+    );
   }
 }
 
@@ -172,13 +186,28 @@ watch(visible, () => {
             <NRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
           </NRadioGroup>
         </NFormItem>
+        <NFormItem label="菜单权限" path="menus">
+          <NSelect
+            v-model:value="model.menus"
+            multiple
+            :options="[{ label: '小说看板', value: 'novel' }]"
+            placeholder="请选择菜单权限"
+          />
+        </NFormItem>
         <NFormItem :label="$t('page.manage.user.members')" path="members">
-          <NSelect v-model:value="model.members" multiple :options="memberOptions"
-            :placeholder="$t('page.manage.user.form.members')" />
+          <NSelect
+            v-model:value="model.members"
+            multiple
+            :options="memberOptions"
+            :placeholder="$t('page.manage.user.form.members')"
+          />
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.roles')" path="roles">
-          <NSelect v-model:value="model.roles" :options="roleOptions"
-            :placeholder="$t('page.manage.user.form.roles')" />
+          <NSelect
+            v-model:value="model.roles"
+            :options="roleOptions"
+            :placeholder="$t('page.manage.user.form.roles')"
+          />
         </NFormItem>
       </NForm>
       <template #footer>

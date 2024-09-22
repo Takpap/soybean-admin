@@ -10,7 +10,8 @@ export function getUserInfo() {
   const emptyInfo: Api.Auth.UserInfo = {
     userId: '',
     username: '',
-    roles: []
+    roles: [],
+    menus: []
   };
   const userInfo = localStg.get('userInfo') || emptyInfo;
 

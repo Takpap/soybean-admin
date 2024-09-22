@@ -63,6 +63,7 @@ declare namespace Api {
       userId: string;
       username: string;
       roles: string[];
+      menus: string[];
     }
   }
 
@@ -164,6 +165,7 @@ declare namespace Api {
       email: string;
       /** user role code collection */
       roles: string;
+      menus: string[];
       members_text?: string;
       roles_text?: string;
     }>;
@@ -189,18 +191,25 @@ declare namespace Api {
     type UserSearchParams = CommonType.RecordNullable<
       Pick<
         Api.SystemManage.User,
-        'id' | 'username' | 'userGender' | 'shortName' | 'password' | 'alias' | 'phone' | 'email' | 'status' | 'members' | 'members_text' | 'roles_text'
+        | 'id'
+        | 'username'
+        | 'userGender'
+        | 'shortName'
+        | 'password'
+        | 'alias'
+        | 'phone'
+        | 'email'
+        | 'status'
+        | 'members'
+        | 'members_text'
+        | 'roles_text'
       > &
-      CommonSearchParams
-      >;
-    
+        CommonSearchParams
+    >;
+
     /** user search params */
     type RelationSearchParams = CommonType.RecordNullable<
-    Pick<
-      Api.SystemManage.Relation,
-      'id' | 'link' | 'advertiser_id'
-    > &
-      CommonSearchParams
+      Pick<Api.SystemManage.Relation, 'id' | 'link' | 'advertiser_id'> & CommonSearchParams
     >;
 
     /** user list */

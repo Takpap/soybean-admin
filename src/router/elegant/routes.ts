@@ -279,7 +279,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base$view.novel',
     meta: {
       title: 'novel',
-      i18nKey: 'route.novel'
+      i18nKey: 'route.novel',
+      roles: ['custom']
     }
   },
   {
