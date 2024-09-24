@@ -81,10 +81,12 @@ function createDefaultModel(): Model {
   };
 }
 
-type RuleKey = Extract<keyof Model, 'username' | 'status'>;
+type RuleKey = Extract<keyof Model, 'username' | 'status' | 'alias' | 'shortName'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
   username: defaultRequiredRule,
+  alias: defaultRequiredRule,
+  shortName: defaultRequiredRule,
   status: defaultRequiredRule
 };
 
