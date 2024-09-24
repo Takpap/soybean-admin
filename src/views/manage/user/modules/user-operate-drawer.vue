@@ -75,7 +75,7 @@ function createDefaultModel(): Model {
     phone: '',
     email: '',
     password: '123456',
-    roles: '',
+    roles: 'ghost',
     status: 1,
     menus: []
   };
@@ -194,19 +194,19 @@ watch(visible, () => {
             placeholder="请选择菜单权限"
           />
         </NFormItem>
-        <NFormItem :label="$t('page.manage.user.members')" path="members">
-          <NSelect
-            v-model:value="model.members"
-            multiple
-            :options="memberOptions"
-            :placeholder="$t('page.manage.user.form.members')"
-          />
-        </NFormItem>
         <NFormItem :label="$t('page.manage.user.roles')" path="roles">
           <NSelect
             v-model:value="model.roles"
             :options="roleOptions"
             :placeholder="$t('page.manage.user.form.roles')"
+          />
+        </NFormItem>
+        <NFormItem v-if="['admin', 'editor'].includes(model.roles)" :label="$t('page.manage.user.members')" path="members">
+          <NSelect
+            v-model:value="model.members"
+            multiple
+            :options="memberOptions"
+            :placeholder="$t('page.manage.user.form.members')"
           />
         </NFormItem>
       </NForm>
